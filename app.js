@@ -1,5 +1,5 @@
-// app.js - VERSION COMPLÈTE STABLE
-// Gestion des jours fériés récurrents, comptage des fériés chômés, export Excel simple
+// app.js - VERSION CORRIGÉE
+// Tous les agents actifs, recherche d'agent pour planning, export Excel simple
 
 // --- CONSTANTES ---
 const JOURS_FRANCAIS = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
@@ -165,7 +165,7 @@ function initializeTestData() {
         { code: 'L15C', nom: 'TOUFIK', prenom: 'ALHAFID', groupe: 'C', tel: '0662888444', adresse: '', code_panique: '999', poste: 'L15A', cin: 'B197016', date_naissance: '1975-02-04', matricule: 'S09260C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'L16C', nom: 'AZIZ', prenom: 'ELALOUSSI', groupe: 'C', tel: '0661098728', adresse: '', code_panique: '328', poste: 'L16', cin: 'Z428454', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'L20C', nom: 'FARASSI', prenom: 'KARIM', groupe: 'C', tel: '0635419761', adresse: '', code_panique: '922', poste: 'L 20', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
-        { code: 'L18C', nom: 'ABDELAZIZ', prenom: 'SAKANI', groupe: 'C', tel: '0662509676', adresse: '', code_panique: '826', poste: 'L18', cin: 'A203082', date_naissance: '1961-03-10', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
+        { code: 'L18C', nom: 'ABDELAZIZ', prenom: 'SAKANI', groupe: 'C', tel: '0662509676', adresse: '', code_panique: '826', poste: 'L18', cin: 'A203082', date_naissance: '1961-03-10', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
 
         // Groupe D
         { code: 'CPD', nom: 'mouhcine', prenom: 'YAGOUB', groupe: 'D', tel: '0660336995', adresse: '', code_panique: '854', poste: 'CPA', cin: '0408930', date_naissance: '1966-05-17', matricule: 'S09272C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
@@ -212,16 +212,7 @@ function initializeTestData() {
         { code: 'Z4B', nom: 'OUHADI', prenom: 'LAHCEN', groupe: 'E', tel: '', adresse: '', code_panique: 'dp1403', poste: 'D.U.E', cin: 'U99650', date_naissance: '1973-08-12', matricule: 'S09992C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'Z4C', nom: 'ELFAKHAR', prenom: 'MOHAMED', groupe: 'E', tel: '', adresse: '', code_panique: 'dp1404', poste: 'D.U.E', cin: 'A737428', date_naissance: '1983-07-03', matricule: 'S09285C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'Z4D', nom: 'TAOUIL', prenom: 'KHALID', groupe: 'E', tel: '', adresse: '', code_panique: 'dp1405', poste: 'D.U.E', cin: 'AD154017', date_naissance: '1988-03-09', matricule: 'S10666C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
-        { code: 'PR', nom: 'OUNASSE', prenom: 'NAWFAL', groupe: 'E', tel: '', adresse: 'C.T.R', code_panique: '', poste: '', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
-
-        // Agents retraités
-        { code: 'O4B', nom: 'ANQACH HASSAN', prenom: 'HASSAN', groupe: 'B', tel: '', adresse: '313', code_panique: '', poste: 'O4', cin: 'non', date_naissance: '1962-04-09', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
-        { code: 'O5A', nom: 'LEKHEL', prenom: 'RACHID', groupe: 'A', tel: '0644734747', adresse: '', code_panique: '848', poste: 'O5', cin: 'non', date_naissance: '1962-12-04', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
-        { code: 'O14A', nom: 'EL KHAOUI', prenom: 'ABDELTIF', groupe: 'A', tel: '0670768055', adresse: '', code_panique: '838', poste: 'O14', cin: 'non', date_naissance: '1961-04-25', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
-        { code: 'L10A', nom: 'AMHZOUL', prenom: 'MUSTAPHA', groupe: 'A', tel: '0707331929', adresse: '', code_panique: '926', poste: 'L10', cin: '', date_naissance: '1961-09-28', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
-        { code: 'O12C', nom: 'AZERFI', prenom: 'SAID', groupe: 'C', tel: '0672499982', adresse: '', code_panique: '855', poste: 'O12', cin: '', date_naissance: '1961-06-30', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
-        { code: 'O5D', nom: 'FERZOUI', prenom: 'KHALED', groupe: 'D', tel: '0676745704', adresse: '', code_panique: '848', poste: 'O5', cin: '', date_naissance: '1962-01-01', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
-        { code: 'L8D', nom: 'BOUTOU', prenom: 'MOHAMED', groupe: 'D', tel: '0670181844', adresse: '', code_panique: '815', poste: 'L8', cin: '', date_naissance: '1961-06-30', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' }
+        { code: 'PR', nom: 'OUNASSE', prenom: 'NAWFAL', groupe: 'E', tel: '', adresse: 'C.T.R', code_panique: '', poste: '', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' }
     ];
     generateYearlyHolidays();
     saveData();
@@ -275,9 +266,9 @@ function isHolidayDate(date) {
     return holidays.some(function(holiday) {
         if (holiday.date === dateStr) return true;
         if (holiday.recurring) {
-            var hParts = holiday.date.split('-');
-            var hMonth = parseInt(hParts[1], 10);
-            var hDay = parseInt(hParts[2], 10);
+            const parts = holiday.date.split('-');
+            const hMonth = parseInt(parts[1], 10);
+            const hDay = parseInt(parts[2], 10);
             if (hMonth === month && hDay === day) return true;
         }
         return false;
@@ -286,34 +277,34 @@ function isHolidayDate(date) {
 
 // --- NUMÉRO DE SEMAINE ISO ---
 function getWeekNumber(date) {
-    var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    var dayNum = d.getUTCDay() || 7;
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
     return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
 }
 
 // --- SHIFT THÉORIQUE ---
 function calculateTheoreticalShift(agentCode, dateStr) {
-    var agent = agents.find(function(a) { return a.code === agentCode; });
+    const agent = agents.find(function(a) { return a.code === agentCode; });
     if (!agent || agent.statut !== 'actif') return '-';
 
-    var parts = dateStr.split('-');
-    var year = parseInt(parts[0], 10);
-    var month = parseInt(parts[1], 10);
-    var day = parseInt(parts[2], 10);
-    var date = new Date(year, month - 1, day);
-    var group = agent.groupe;
+    const parts = dateStr.split('-');
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const day = parseInt(parts[2], 10);
+    const date = new Date(year, month - 1, day);
+    const group = agent.groupe;
 
     if (group === 'E') {
-        var dayOfWeek = date.getDay();
+        const dayOfWeek = date.getDay();
         if (dayOfWeek === 0 || dayOfWeek === 6) return 'R';
-        var agentsE = agents.filter(function(a) { return a.groupe === 'E' && a.statut === 'actif'; }).sort(function(a,b) { return a.code.localeCompare(b.code); });
-        var indexAgent = agentsE.findIndex(function(a) { return a.code === agentCode; });
+        const agentsE = agents.filter(function(a) { return a.groupe === 'E' && a.statut === 'actif'; }).sort(function(a,b) { return a.code.localeCompare(b.code); });
+        const indexAgent = agentsE.findIndex(function(a) { return a.code === agentCode; });
         if (indexAgent === -1) return 'R';
-        var weekNumber = getWeekNumber(date);
-        var isOddWeek = weekNumber % 2 !== 0;
-        var isEvenWeekday = dayOfWeek % 2 === 0;
+        const weekNumber = getWeekNumber(date);
+        const isOddWeek = weekNumber % 2 !== 0;
+        const isEvenWeekday = dayOfWeek % 2 === 0;
         if (indexAgent === 0) {
             return isOddWeek ? (isEvenWeekday ? '1' : '2') : (isEvenWeekday ? '2' : '1');
         }
@@ -323,15 +314,15 @@ function calculateTheoreticalShift(agentCode, dateStr) {
         return ((indexAgent + weekNumber) % 2 === 0) ? '1' : '2';
     }
 
-    var entryParts = agent.date_entree.split('-');
-    var entryYear = parseInt(entryParts[0], 10);
-    var entryMonth = parseInt(entryParts[1], 10);
-    var entryDay = parseInt(entryParts[2], 10);
-    var dateEntree = new Date(entryYear, entryMonth - 1, entryDay);
-    var daysSinceStart = Math.floor((date - dateEntree) / (1000 * 60 * 60 * 24));
-    var groupOffset = { 'A': 0, 'B': 2, 'C': 4, 'D': 6 }[group] || 0;
-    var cycleDay = (daysSinceStart + groupOffset) % 8;
-    var cycle = ['1', '1', '2', '2', '3', '3', 'R', 'R'];
+    const entryParts = agent.date_entree.split('-');
+    const entryYear = parseInt(entryParts[0], 10);
+    const entryMonth = parseInt(entryParts[1], 10);
+    const entryDay = parseInt(entryParts[2], 10);
+    const dateEntree = new Date(entryYear, entryMonth - 1, entryDay);
+    const daysSinceStart = Math.floor((date - dateEntree) / (1000 * 60 * 60 * 24));
+    const groupOffset = { 'A': 0, 'B': 2, 'C': 4, 'D': 6 }[group] || 0;
+    const cycleDay = (daysSinceStart + groupOffset) % 8;
+    const cycle = ['1', '1', '2', '2', '3', '3', 'R', 'R'];
     return cycle[cycleDay];
 }
 
@@ -340,7 +331,7 @@ function getTheoreticalShift(agentCode, dateStr) {
 }
 
 function getShiftForAgent(agentCode, dateStr) {
-    var monthKey = dateStr.substring(0, 7);
+    const monthKey = dateStr.substring(0, 7);
     if (planningData[monthKey] && planningData[monthKey][agentCode] && planningData[monthKey][agentCode][dateStr]) {
         return planningData[monthKey][agentCode][dateStr].shift;
     }
@@ -349,19 +340,19 @@ function getShiftForAgent(agentCode, dateStr) {
 
 // --- CALCUL DES JOURS TRAVAILLÉS ---
 function calculateWorkedDays(agentCode, month, year) {
-    var daysInMonth = new Date(year, month, 0).getDate();
-    var workedDays = 0;
-    var holidayWorkedDays = 0;
-    var leaveDays = 0;
-    var sundayLeaves = 0;
+    const daysInMonth = new Date(year, month, 0).getDate();
+    let workedDays = 0;
+    let holidayWorkedDays = 0;
+    let leaveDays = 0;
+    let sundayLeaves = 0;
     
-    for (var day = 1; day <= daysInMonth; day++) {
-        var date = new Date(year, month - 1, day);
-        var dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
-        var realShift = getShiftForAgent(agentCode, dateStr);
-        var theoreticalShift = getTheoreticalShift(agentCode, dateStr);
-        var isSunday = date.getDay() === 0;
-        var isHoliday = isHolidayDate(date);
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month - 1, day);
+        const dateStr = year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+        const realShift = getShiftForAgent(agentCode, dateStr);
+        const theoreticalShift = getTheoreticalShift(agentCode, dateStr);
+        const isSunday = date.getDay() === 0;
+        const isHoliday = isHolidayDate(date);
         
         if (realShift === '1' || realShift === '2' || realShift === '3') {
             workedDays++;
@@ -377,26 +368,26 @@ function calculateWorkedDays(agentCode, month, year) {
             holidayWorkedDays++;
         }
     }
-    var totalDays = workedDays + holidayWorkedDays;
+    const totalDays = workedDays + holidayWorkedDays;
     return { workedDays: workedDays, totalDays: totalDays, leaveDays: leaveDays, holidayWorkedDays: holidayWorkedDays, sundayLeaves: sundayLeaves };
 }
 
 // --- STATISTIQUES AVANCÉES ---
 function obtenirStatsDetailleesAgent(agentCode, mois, annee) {
-    var agent = agents.find(function(a) { return a.code === agentCode; });
+    const agent = agents.find(function(a) { return a.code === agentCode; });
     if (!agent) return { erreur: "Agent non trouvé" };
-    var daysInMonth = new Date(annee, mois, 0).getDate();
-    var joursTravailles = 0, joursRepos = 0, joursConges = 0, joursMaladie = 0, joursAutres = 0, joursFeriesTravailles = 0;
-    var joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-    var shiftsParJour = {};
-    for (var i = 0; i < joursSemaine.length; i++) {
+    const daysInMonth = new Date(annee, mois, 0).getDate();
+    let joursTravailles = 0, joursRepos = 0, joursConges = 0, joursMaladie = 0, joursAutres = 0, joursFeriesTravailles = 0;
+    const joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+    const shiftsParJour = {};
+    for (let i = 0; i < joursSemaine.length; i++) {
         shiftsParJour[joursSemaine[i]] = { '1':0, '2':0, '3':0, 'R':0, 'C':0, 'M':0, 'A':0 };
     }
-    for (var d = 1; d <= daysInMonth; d++) {
-        var date = new Date(annee, mois - 1, d);
-        var dateStr = annee + '-' + String(mois).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-        var shift = getShiftForAgent(agentCode, dateStr);
-        var estFerie = isHolidayDate(date);
+    for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(annee, mois - 1, d);
+        const dateStr = annee + '-' + String(mois).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+        const shift = getShiftForAgent(agentCode, dateStr);
+        const estFerie = isHolidayDate(date);
         if (shift === '1' || shift === '2' || shift === '3') {
             joursTravailles++;
             if (estFerie) joursFeriesTravailles++;
@@ -409,14 +400,14 @@ function obtenirStatsDetailleesAgent(agentCode, mois, annee) {
         } else if (shift === 'A') {
             joursAutres++;
         }
-        var jourIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
-        var jourSemaine = joursSemaine[jourIndex];
+        const jourIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
+        const jourSemaine = joursSemaine[jourIndex];
         if (shiftsParJour[jourSemaine] && shiftsParJour[jourSemaine][shift] !== undefined)
             shiftsParJour[jourSemaine][shift]++;
     }
-    var totalJours = joursTravailles + joursFeriesTravailles;
-    var tauxPresence = totalJours > 0 ? (joursTravailles / totalJours) * 100 : 0;
-    var statsBase = calculateWorkedDays(agentCode, mois, annee);
+    const totalJours = joursTravailles + joursFeriesTravailles;
+    const tauxPresence = totalJours > 0 ? (joursTravailles / totalJours) * 100 : 0;
+    const statsBase = calculateWorkedDays(agentCode, mois, annee);
     return {
         agent: agentCode, nom_complet: agent.nom + ' ' + agent.prenom, groupe: agent.groupe,
         indicateurs_avances: {
@@ -429,14 +420,14 @@ function obtenirStatsDetailleesAgent(agentCode, mois, annee) {
 }
 
 function obtenirClassementGroupe(groupe, mois, annee) {
-    var agentsGroupe = agents.filter(function(a) { return a.groupe === groupe && a.statut === 'actif'; });
+    const agentsGroupe = agents.filter(function(a) { return a.groupe === groupe && a.statut === 'actif'; });
     if (agentsGroupe.length === 0) return { erreur: "Aucun agent dans le groupe " + groupe };
-    var classement = agentsGroupe.map(function(agent) {
-        var stats = calculateWorkedDays(agent.code, mois, annee);
+    const classement = agentsGroupe.map(function(agent) {
+        const stats = calculateWorkedDays(agent.code, mois, annee);
         return { code: agent.code, nom: agent.nom, prenom: agent.prenom, nom_complet: agent.nom + ' ' + agent.prenom, cpa: stats.workedDays };
     });
     classement.sort(function(a,b) { return b.cpa - a.cpa; });
-    for (var i = 0; i < classement.length; i++) {
+    for (let i = 0; i < classement.length; i++) {
         classement[i].rang = i + 1;
     }
     return { groupe: groupe, mois: mois, annee: annee, classement: classement, total_agents: classement.length };
@@ -444,19 +435,19 @@ function obtenirClassementGroupe(groupe, mois, annee) {
 
 function obtenirEvolutionMensuelle(agentCode, nbMois) {
     if (nbMois === undefined) nbMois = 6;
-    var today = new Date();
-    var moisActuel = today.getMonth() + 1, anneeActuelle = today.getFullYear();
-    var evolution = [];
-    for (var i = 0; i < nbMois; i++) {
-        var moisCalc = moisActuel - i, anneeCalc = anneeActuelle;
+    const today = new Date();
+    let moisActuel = today.getMonth() + 1, anneeActuelle = today.getFullYear();
+    const evolution = [];
+    for (let i = 0; i < nbMois; i++) {
+        let moisCalc = moisActuel - i, anneeCalc = anneeActuelle;
         if (moisCalc <= 0) { moisCalc += 12; anneeCalc--; }
-        var stats = calculateWorkedDays(agentCode, moisCalc, anneeCalc);
-        var periode = String(moisCalc).padStart(2,'0') + '/' + anneeCalc;
+        const stats = calculateWorkedDays(agentCode, moisCalc, anneeCalc);
+        const periode = String(moisCalc).padStart(2,'0') + '/' + anneeCalc;
         evolution.unshift({ mois: moisCalc, annee: anneeCalc, cpa: stats.workedDays, periode: periode });
     }
-    var tendance = 0;
+    let tendance = 0;
     if (evolution.length >= 2) {
-        var premier = evolution[0].cpa, dernier = evolution[evolution.length-1].cpa;
+        const premier = evolution[0].cpa, dernier = evolution[evolution.length-1].cpa;
         if (premier > 0) tendance = ((dernier - premier) / premier) * 100;
     }
     return { agent: agentCode, evolution: evolution, tendance: parseFloat(tendance.toFixed(1)), nb_mois: nbMois };
@@ -464,14 +455,14 @@ function obtenirEvolutionMensuelle(agentCode, nbMois) {
 
 // ==================== MENU PRINCIPAL ====================
 function displayMainMenu() {
-    var mainContent = document.getElementById('main-content');
-    var subTitle = document.getElementById('sub-title');
+    const mainContent = document.getElementById('main-content');
+    const subTitle = document.getElementById('sub-title');
     if (!mainContent) return;
     if (subTitle) subTitle.textContent = "Menu Principal";
     mainContent.innerHTML = '';
-    var container = document.createElement('div');
+    const container = document.createElement('div');
     container.className = 'menu-button-container';
-    var menus = [
+    const menus = [
         { text: "👥 GESTION DES AGENTS", handler: function() { displayAgentsMenu(); } },
         { text: "📅 GESTION DU PLANNING", handler: function() { displayPlanningMenu(); } },
         { text: "📊 STATISTIQUES", handler: function() { displayStatsMenu(); } },
@@ -485,9 +476,9 @@ function displayMainMenu() {
         { text: "⚙️ CONFIGURATION", handler: function() { displayConfigMenu(); } },
         { text: "🚪 QUITTER", handler: function() { if(confirm("Quitter ?")) saveData(); }, className: "quit-button" }
     ];
-    for (var i = 0; i < menus.length; i++) {
-        var menu = menus[i];
-        var btn = document.createElement('button');
+    for (let i = 0; i < menus.length; i++) {
+        const menu = menus[i];
+        const btn = document.createElement('button');
         btn.textContent = menu.text;
         btn.className = 'menu-button' + (menu.className ? ' ' + menu.className : '');
         btn.onclick = menu.handler;
@@ -497,16 +488,16 @@ function displayMainMenu() {
 }
 
 function displaySubMenu(title, options) {
-    var mainContent = document.getElementById('main-content');
-    var subTitle = document.getElementById('sub-title');
+    const mainContent = document.getElementById('main-content');
+    const subTitle = document.getElementById('sub-title');
     if (!mainContent) return;
     if (subTitle) subTitle.textContent = title;
     mainContent.innerHTML = '';
-    var container = document.createElement('div');
+    const container = document.createElement('div');
     container.className = 'menu-button-container';
-    for (var i = 0; i < options.length; i++) {
-        var opt = options[i];
-        var btn = document.createElement('button');
+    for (let i = 0; i < options.length; i++) {
+        const opt = options[i];
+        const btn = document.createElement('button');
         btn.textContent = opt.text;
         btn.className = 'menu-button' + (opt.className ? ' ' + opt.className : '');
         btn.onclick = opt.handler;
@@ -529,15 +520,15 @@ function displayAgentsMenu() {
 }
 
 function showAgentsList() {
-    var html = '<div class="info-section"><input type="text" id="searchAgent" placeholder="Rechercher..." class="form-input" style="margin-bottom:15px;" onkeyup="filterAgentsList()"><div id="agentsListContainer">' + generateAgentsTable(agents) + '</div></div>';
+    const html = '<div class="info-section"><input type="text" id="searchAgent" placeholder="Rechercher..." class="form-input" style="margin-bottom:15px;" onkeyup="filterAgentsList()"><div id="agentsListContainer">' + generateAgentsTable(agents) + '</div></div>';
     openPopup("Liste des Agents", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function generateAgentsTable(agentsList) {
     if (!agentsList.length) return '<p>Aucun agent</p>';
-    var html = '<table class="classement-table"><thead><tr><th>Code</th><th>Nom</th><th>Groupe</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
-    for (var i = 0; i < agentsList.length; i++) {
-        var a = agentsList[i];
+    let html = '<table class="classement-table"><thead><tr><th>Code</th><th>Nom</th><th>Groupe</th><th>Statut</th><th>Actions</th></tr></thead><tbody>';
+    for (let i = 0; i < agentsList.length; i++) {
+        const a = agentsList[i];
         html += '<tr>' +
             '<td><strong>' + a.code + '</strong></td>' +
             '<td>' + a.nom + ' ' + a.prenom + '</td>' +
@@ -551,20 +542,20 @@ function generateAgentsTable(agentsList) {
 }
 
 function filterAgentsList() {
-    var searchInput = document.getElementById('searchAgent');
-    var search = searchInput ? searchInput.value.toLowerCase() : '';
-    var filtered = agents.filter(function(a) { return a.nom.toLowerCase().includes(search) || a.code.toLowerCase().includes(search); });
-    var container = document.getElementById('agentsListContainer');
+    const searchInput = document.getElementById('searchAgent');
+    const search = searchInput ? searchInput.value.toLowerCase() : '';
+    const filtered = agents.filter(function(a) { return a.nom.toLowerCase().includes(search) || a.code.toLowerCase().includes(search); });
+    const container = document.getElementById('agentsListContainer');
     if (container) container.innerHTML = generateAgentsTable(filtered);
 }
 
 function showAddAgentForm() {
-    var html = '<div class="info-section"><form id="addAgentForm"><div class="form-group"><label>Code *</label><input type="text" id="newCode" required></div><div class="form-group"><label>Nom *</label><input type="text" id="newNom" required></div><div class="form-group"><label>Prénom *</label><input type="text" id="newPrenom" required></div><div class="form-group"><label>Groupe *</label><select id="newGroupe"><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div><div class="form-group"><label>Téléphone</label><input type="text" id="newTel"></div><div class="form-group"><label>Poste</label><input type="text" id="newPoste"></div><div class="form-group"><label>Date d\'entrée</label><input type="date" id="newDateEntree" value="2025-11-01"></div></form></div>';
+    const html = '<div class="info-section"><form id="addAgentForm"><div class="form-group"><label>Code *</label><input type="text" id="newCode" required></div><div class="form-group"><label>Nom *</label><input type="text" id="newNom" required></div><div class="form-group"><label>Prénom *</label><input type="text" id="newPrenom" required></div><div class="form-group"><label>Groupe *</label><select id="newGroupe"><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div><div class="form-group"><label>Téléphone</label><input type="text" id="newTel"></div><div class="form-group"><label>Poste</label><input type="text" id="newPoste"></div><div class="form-group"><label>Date d\'entrée</label><input type="date" id="newDateEntree" value="2025-11-01"></div></form></div>';
     openPopup("Ajouter un Agent", html, '<button class="popup-button green" onclick="addAgent()">Enregistrer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function addAgent() {
-    var code = document.getElementById('newCode').value.toUpperCase();
+    const code = document.getElementById('newCode').value.toUpperCase();
     if (agents.find(function(a) { return a.code === code; })) { showSnackbar("Code déjà existant"); return; }
     agents.push({ code: code, nom: document.getElementById('newNom').value, prenom: document.getElementById('newPrenom').value, groupe: document.getElementById('newGroupe').value, tel: document.getElementById('newTel').value, poste: document.getElementById('newPoste').value, statut: 'actif', date_entree: document.getElementById('newDateEntree').value || '2025-11-01' });
     saveData();
@@ -578,14 +569,14 @@ function showEditAgentList() {
 }
 
 function showEditAgentForm(code) {
-    var agent = agents.find(function(a) { return a.code === code; });
+    const agent = agents.find(function(a) { return a.code === code; });
     if (!agent) return;
-    var html = '<div class="info-section"><form id="editAgentForm"><div class="form-group"><label>Code</label><input type="text" value="' + agent.code + '" disabled></div><div class="form-group"><label>Nom</label><input type="text" id="editNom" value="' + agent.nom + '"></div><div class="form-group"><label>Prénom</label><input type="text" id="editPrenom" value="' + agent.prenom + '"></div><div class="form-group"><label>Groupe</label><select id="editGroupe"><option ' + (agent.groupe==='A'?'selected':'') + '>A</option><option ' + (agent.groupe==='B'?'selected':'') + '>B</option><option ' + (agent.groupe==='C'?'selected':'') + '>C</option><option ' + (agent.groupe==='D'?'selected':'') + '>D</option><option ' + (agent.groupe==='E'?'selected':'') + '>E</option></select></div><div class="form-group"><label>Téléphone</label><input type="text" id="editTel" value="' + (agent.tel||'') + '"></div><div class="form-group"><label>Poste</label><input type="text" id="editPoste" value="' + (agent.poste||'') + '"></div><div class="form-group"><label>Date d\'entrée</label><input type="date" id="editDateEntree" value="' + (agent.date_entree||'2025-11-01') + '"></div></form></div>';
+    const html = '<div class="info-section"><form id="editAgentForm"><div class="form-group"><label>Code</label><input type="text" value="' + agent.code + '" disabled></div><div class="form-group"><label>Nom</label><input type="text" id="editNom" value="' + agent.nom + '"></div><div class="form-group"><label>Prénom</label><input type="text" id="editPrenom" value="' + agent.prenom + '"></div><div class="form-group"><label>Groupe</label><select id="editGroupe"><option ' + (agent.groupe==='A'?'selected':'') + '>A</option><option ' + (agent.groupe==='B'?'selected':'') + '>B</option><option ' + (agent.groupe==='C'?'selected':'') + '>C</option><option ' + (agent.groupe==='D'?'selected':'') + '>D</option><option ' + (agent.groupe==='E'?'selected':'') + '>E</option></select></div><div class="form-group"><label>Téléphone</label><input type="text" id="editTel" value="' + (agent.tel||'') + '"></div><div class="form-group"><label>Poste</label><input type="text" id="editPoste" value="' + (agent.poste||'') + '"></div><div class="form-group"><label>Date d\'entrée</label><input type="date" id="editDateEntree" value="' + (agent.date_entree||'2025-11-01') + '"></div></form></div>';
     openPopup("Modifier " + code, html, '<button class="popup-button green" onclick="updateAgent(\'' + code + '\')">Enregistrer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function updateAgent(code) {
-    var idx = agents.findIndex(function(a) { return a.code === code; });
+    const idx = agents.findIndex(function(a) { return a.code === code; });
     if (idx !== -1) {
         agents[idx].nom = document.getElementById('editNom').value;
         agents[idx].prenom = document.getElementById('editPrenom').value;
@@ -601,13 +592,13 @@ function updateAgent(code) {
 }
 
 function showDeleteAgentList() {
-    var active = agents.filter(function(a) { return a.statut === 'actif'; });
+    const active = agents.filter(function(a) { return a.statut === 'actif'; });
     openPopup("Supprimer un Agent", '<div class="info-section">' + generateAgentsTable(active) + '</div>', '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function deleteAgent(code) {
     if (confirm("Supprimer cet agent ?")) {
-        var idx = agents.findIndex(function(a) { return a.code === code; });
+        const idx = agents.findIndex(function(a) { return a.code === code; });
         if (idx !== -1) {
             agents[idx].statut = 'inactif';
             saveData();
@@ -620,26 +611,26 @@ function deleteAgent(code) {
 // --- IMPORT DATA.JS ---
 function showImportDataJSForm() {
     if (!checkPassword()) { showSnackbar("Mot de passe incorrect"); return; }
-    var html = '<div class="info-section"><h3>📁 Importer agents depuis data.js</h3><p>Sélectionnez votre fichier <strong>data.js</strong>.</p>' +
+    const html = '<div class="info-section"><h3>📁 Importer agents depuis data.js</h3><p>Sélectionnez votre fichier <strong>data.js</strong>.</p>' +
     '<div class="form-group"><label>Fichier data.js</label><input type="file" id="dataJsFile" accept=".js" class="form-input"></div>' +
     '<div class="form-group"><label>Option d\'import</label><select id="importDataJsOption"><option value="replace">Remplacer tous les agents</option><option value="merge">Fusionner (mettre à jour si code existe)</option><option value="add">Ajouter (codes en doublon seront ignorés)</option></select></div>' +
     '<div id="dataJsPreview" style="display:none"><h4>Aperçu</h4><div id="dataJsPreviewTable"></div></div></div>';
     openPopup("Importer data.js", html, '<button class="popup-button green" onclick="processDataJsImport()">Importer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
-    var fileInput = document.getElementById('dataJsFile');
+    const fileInput = document.getElementById('dataJsFile');
     if (fileInput) fileInput.addEventListener('change', previewDataJsFile);
 }
 
 function previewDataJsFile() {
-    var file = document.getElementById('dataJsFile').files[0];
+    const file = document.getElementById('dataJsFile').files[0];
     if (!file) return;
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function(e) {
-        var content = e.target.result;
-        var arrayStr = null;
-        var agentsMatch = content.match(/const\s+agents\s*=\s*(\[[\s\S]*?\]);/);
+        const content = e.target.result;
+        let arrayStr = null;
+        const agentsMatch = content.match(/const\s+agents\s*=\s*(\[[\s\S]*?\]);/);
         if (agentsMatch) arrayStr = agentsMatch[1];
         else {
-            var altMatch = content.match(/agents\s*=\s*(\[[\s\S]*?\]);/);
+            const altMatch = content.match(/agents\s*=\s*(\[[\s\S]*?\]);/);
             if (altMatch) arrayStr = altMatch[1];
         }
         if (!arrayStr) {
@@ -649,11 +640,11 @@ function previewDataJsFile() {
         }
         arrayStr = arrayStr.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
         try {
-            var agentsArray = eval('(' + arrayStr + ')');
-            var preview = agentsArray.slice(0, 5);
-            var html = '<table class="classement-table"><thead><tr><th>Code</th><th>Nom</th><th>Prénom</th><th>Groupe</th></tr></thead><tbody>';
-            for (var i = 0; i < preview.length; i++) {
-                var a = preview[i];
+            const agentsArray = eval('(' + arrayStr + ')');
+            const preview = agentsArray.slice(0, 5);
+            let html = '<table class="classement-table"><thead><tr><th>Code</th><th>Nom</th><th>Prénom</th><th>Groupe</th></tr></thead><tbody>';
+            for (let i = 0; i < preview.length; i++) {
+                const a = preview[i];
                 html += '<tr><td>' + a.code + '</td><td>' + a.nom + '</td><td>' + a.prenom + '</td><td>' + a.groupe + '</td></tr>';
             }
             html += '</tbody></table><p>Total: ' + agentsArray.length + ' agents</p>';
@@ -668,28 +659,28 @@ function previewDataJsFile() {
 }
 
 function processDataJsImport() {
-    var file = document.getElementById('dataJsFile').files[0];
+    const file = document.getElementById('dataJsFile').files[0];
     if (!file) { showSnackbar("Veuillez sélectionner un fichier data.js"); return; }
-    var option = document.getElementById('importDataJsOption').value;
-    var reader = new FileReader();
+    const option = document.getElementById('importDataJsOption').value;
+    const reader = new FileReader();
     reader.onload = function(e) {
-        var content = e.target.result;
-        var arrayStr = null;
-        var agentsMatch = content.match(/const\s+agents\s*=\s*(\[[\s\S]*?\]);/);
+        const content = e.target.result;
+        let arrayStr = null;
+        const agentsMatch = content.match(/const\s+agents\s*=\s*(\[[\s\S]*?\]);/);
         if (agentsMatch) arrayStr = agentsMatch[1];
         else {
-            var altMatch = content.match(/agents\s*=\s*(\[[\s\S]*?\]);/);
+            const altMatch = content.match(/agents\s*=\s*(\[[\s\S]*?\]);/);
             if (altMatch) arrayStr = altMatch[1];
         }
         if (!arrayStr) { showSnackbar("Fichier invalide : agents non trouvé"); return; }
         arrayStr = arrayStr.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
         try {
-            var importedAgents = eval('(' + arrayStr + ')');
+            const importedAgents = eval('(' + arrayStr + ')');
             if (!Array.isArray(importedAgents)) { showSnackbar("Le tableau d'agents n'est pas valide"); return; }
-            var added = 0, updated = 0, skipped = 0;
+            let added = 0, updated = 0, skipped = 0;
             if (option === 'replace') agents = [];
-            for (var i = 0; i < importedAgents.length; i++) {
-                var newAgent = importedAgents[i];
+            for (let i = 0; i < importedAgents.length; i++) {
+                const newAgent = importedAgents[i];
                 if (!newAgent.code || !newAgent.nom || !newAgent.prenom || !newAgent.groupe) {
                     skipped++;
                     continue;
@@ -699,14 +690,14 @@ function processDataJsImport() {
                 if (!newAgent.tel) newAgent.tel = '';
                 if (!newAgent.poste) newAgent.poste = '';
                 
-                var existingIndex = agents.findIndex(function(a) { return a.code === newAgent.code; });
+                const existingIndex = agents.findIndex(function(a) { return a.code === newAgent.code; });
                 if (existingIndex !== -1) {
                     if (option === 'merge') {
                         agents[existingIndex] = Object.assign({}, agents[existingIndex], newAgent);
                         updated++;
                     } else if (option === 'add') {
-                        var newCode = newAgent.code;
-                        var counter = 1;
+                        let newCode = newAgent.code;
+                        let counter = 1;
                         while (agents.find(function(a) { return a.code === newCode; })) {
                             newCode = newAgent.code + '_' + counter++;
                         }
@@ -732,7 +723,7 @@ function processDataJsImport() {
     reader.readAsText(file, 'UTF-8');
 }
 
-// ==================== GESTION DU PLANNING ====================
+// ==================== GESTION DU PLANNING AVEC RECHERCHE ====================
 function displayPlanningMenu() {
     displaySubMenu("GESTION DU PLANNING", [
         { text: "📅 Planning Mensuel", handler: function() { showMonthlyPlanning(); } },
@@ -745,106 +736,131 @@ function displayPlanningMenu() {
 }
 
 function showMonthlyPlanning() {
-    var today = new Date();
-    var monthOptions = '';
-    for (var i = 0; i < 12; i++) {
-        var selected = (i+1 === today.getMonth()+1) ? 'selected' : '';
+    const today = new Date();
+    let monthOptions = '';
+    for (let i = 0; i < 12; i++) {
+        const selected = (i+1 === today.getMonth()+1) ? 'selected' : '';
         monthOptions += '<option value="' + (i+1) + '" ' + selected + '>' + getMonthName(i+1) + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Mois</label><select id="planMonth">' + monthOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Mois</label><select id="planMonth">' + monthOptions + '</select></div>' +
     '<div class="form-group"><label>Année</label><input type="number" id="planYear" value="' + today.getFullYear() + '"></div></div>';
     openPopup("Planning Mensuel", html, '<button class="popup-button green" onclick="generatePlanningView()">Voir</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function generatePlanningView() {
-    var month = parseInt(document.getElementById('planMonth').value, 10);
-    var year = parseInt(document.getElementById('planYear').value, 10);
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var daysInMonth = new Date(year, month, 0).getDate();
-    var html = '<div class="info-section"><h3>Planning ' + getMonthName(month) + ' ' + year + '</h3><div style="overflow-x:auto"><table class="planning-table"><thead><th>Agent</th>';
-    for (var d = 1; d <= daysInMonth; d++) {
-        var date = new Date(year, month-1, d);
-        var isHoliday = isHolidayDate(date);
+    const month = parseInt(document.getElementById('planMonth').value, 10);
+    const year = parseInt(document.getElementById('planYear').value, 10);
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    const daysInMonth = new Date(year, month, 0).getDate();
+    let html = '<div class="info-section"><h3>Planning ' + getMonthName(month) + ' ' + year + '</h3><div style="overflow-x:auto"><table class="planning-table"><thead><th>Agent</th>';
+    for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month-1, d);
+        const isHoliday = isHolidayDate(date);
         html += '<th class="' + (isHoliday ? 'holiday' : '') + '">' + d + '<br>' + JOURS_FRANCAIS[date.getDay()].substring(0,2) + '</th>';
     }
     html += '<th>Total</th></thead><tbody>';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var agent = activeAgents[i];
-        var stats = calculateWorkedDays(agent.code, month, year);
+    for (let i = 0; i < activeAgents.length; i++) {
+        const agent = activeAgents[i];
+        const stats = calculateWorkedDays(agent.code, month, year);
         html += '汽笛<td><strong>' + agent.code + '</strong><br><small>' + agent.nom + '</small>汽笛';
-        for (var d = 1; d <= daysInMonth; d++) {
-            var dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-            var shift = getShiftForAgent(agent.code, dateStr);
-            var date = new Date(year, month-1, d);
-            var isHoliday = isHolidayDate(date);
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+            const shift = getShiftForAgent(agent.code, dateStr);
+            const date = new Date(year, month-1, d);
+            const isHoliday = isHolidayDate(date);
             html += '<td class="shift-cell" style="background:' + SHIFT_COLORS[shift] + ';color:white" title="' + SHIFT_LABELS[shift] + (isHoliday ? ' - Férié' : '') + '" onclick="showShiftModification(\'' + agent.code + '\',\'' + dateStr + '\')">' + shift + '汽笛';
         }
         html += '<td style="background:#34495e"><strong>' + stats.totalDays + ' j</strong><br><small>' + stats.workedDays + ' travaillés<br>+' + stats.holidayWorkedDays + ' fériés</small>汽笛';
     }
     html += '</tbody>赶趟</div><div class="info-section"><h4>Légende:</h4>';
-    for (var k in SHIFT_LABELS) {
+    for (const k in SHIFT_LABELS) {
         html += '<span style="display:inline-block;margin:5px;padding:2px 8px;background:' + SHIFT_COLORS[k] + ';border-radius:12px">' + k + '=' + SHIFT_LABELS[k] + '</span>';
     }
     html += '<br><span style="background:#e74c3c">📅 Jours fériés</span><br><span style="background:#2ecc71">📊 Total = travaillés + fériés chômés</span></div></div>';
     openPopup("Planning " + getMonthName(month) + " " + year, html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
-function showAgentPlanningSelector() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
-        agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + ' (' + a.code + ')</option>';
+// Fonction de recherche d'agent pour le planning
+function filterAgentForPlanning() {
+    const searchTerm = document.getElementById('agentSearchInput').value.toLowerCase();
+    const agentSelect = document.getElementById('apAgent');
+    if (!agentSelect) return;
+    
+    for (let i = 0; i < agentSelect.options.length; i++) {
+        const option = agentSelect.options[i];
+        const text = option.text.toLowerCase();
+        if (searchTerm === '' || text.includes(searchTerm)) {
+            option.style.display = '';
+        } else {
+            option.style.display = 'none';
+        }
     }
-    var monthOptions = '';
-    for (var i = 0; i < 12; i++) {
+}
+
+function showAgentPlanningSelector() {
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
+        agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + ' (' + a.code + ') - Groupe ' + a.groupe + '</option>';
+    }
+    let monthOptions = '';
+    for (let i = 0; i < 12; i++) {
         monthOptions += '<option value="' + (i+1) + '">' + getMonthName(i+1) + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="apAgent">' + agentOptions + '</select></div>' +
-    '<div class="form-group"><label>Mois</label><select id="apMonth">' + monthOptions + '</select></div>' +
-    '<div class="form-group"><label>Année</label><input type="number" id="apYear" value="' + new Date().getFullYear() + '"></div></div>';
+    const html = '<div class="info-section">' +
+        '<div class="form-group"><label>🔍 Rechercher un agent</label><input type="text" id="agentSearchInput" class="form-input" placeholder="Nom, prénom ou code..." onkeyup="filterAgentForPlanning()"></div>' +
+        '<div class="form-group"><label>Agent</label><select id="apAgent" size="5" style="height:auto; min-height:120px">' + agentOptions + '</select></div>' +
+        '<div class="form-group"><label>Mois</label><select id="apMonth">' + monthOptions + '</select></div>' +
+        '<div class="form-group"><label>Année</label><input type="number" id="apYear" value="' + new Date().getFullYear() + '"></div>' +
+        '</div>';
     openPopup("Planning par Agent", html, '<button class="popup-button green" onclick="showAgentPlanningView()">Voir</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function showAgentPlanningView() {
-    var agentCode = document.getElementById('apAgent').value;
-    var month = parseInt(document.getElementById('apMonth').value, 10);
-    var year = parseInt(document.getElementById('apYear').value, 10);
-    var agent = agents.find(function(a) { return a.code === agentCode; });
+    const agentSelect = document.getElementById('apAgent');
+    const agentCode = agentSelect ? agentSelect.value : null;
+    if (!agentCode) {
+        showSnackbar("Veuillez sélectionner un agent");
+        return;
+    }
+    const month = parseInt(document.getElementById('apMonth').value, 10);
+    const year = parseInt(document.getElementById('apYear').value, 10);
+    const agent = agents.find(function(a) { return a.code === agentCode; });
     if (!agent) return;
-    var daysInMonth = new Date(year, month, 0).getDate();
-    var stats = calculateWorkedDays(agentCode, month, year);
-    var html = '<div class="info-section"><h3>Planning de ' + agent.nom + ' ' + agent.prenom + ' (' + agent.code + ')</h3><p><strong>Groupe:</strong> ' + agent.groupe + ' | <strong>Poste:</strong> ' + (agent.poste || 'Non spécifié') + '</p>';
+    const daysInMonth = new Date(year, month, 0).getDate();
+    const stats = calculateWorkedDays(agentCode, month, year);
+    let html = '<div class="info-section"><h3>Planning de ' + agent.nom + ' ' + agent.prenom + ' (' + agent.code + ')</h3><p><strong>Groupe:</strong> ' + agent.groupe + ' | <strong>Poste:</strong> ' + (agent.poste || 'Non spécifié') + '</p>';
     html += '<div style="background:#34495e;padding:10px;border-radius:8px;margin-bottom:15px"><strong>Statistiques du mois:</strong><br>📊 Total jours = ' + stats.totalDays + ' (' + stats.workedDays + ' travaillés + ' + stats.holidayWorkedDays + ' fériés)<br>📅 Jours fériés chômés: ' + stats.holidayWorkedDays + '<br>⚠️ Congés dimanches (non comptés): ' + stats.sundayLeaves + '<br>🚫 Congés (non comptabilisés): ' + stats.leaveDays + '</div>';
     html += '<table class="planning-table"><thead><th>Date</th><th>Jour</th><th>Shift</th><th>Description</th><th>Actions</th></thead><tbody>';
-    for (var d = 1; d <= daysInMonth; d++) {
-        var date = new Date(year, month-1, d);
-        var dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-        var shift = getShiftForAgent(agentCode, dateStr);
-        var isHoliday = isHolidayDate(date);
-        var isSunday = date.getDay() === 0;
-        var extraInfo = '';
+    for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month-1, d);
+        const dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+        const shift = getShiftForAgent(agentCode, dateStr);
+        const isHoliday = isHolidayDate(date);
+        const isSunday = date.getDay() === 0;
+        let extraInfo = '';
         if (isHoliday && (shift === '1' || shift === '2' || shift === '3')) extraInfo = ' 🎉 Férié travaillé';
         if ((shift === 'C' || shift === 'M' || shift === 'A') && isSunday) extraInfo = ' ⚠️ Congé dimanche (non compté)';
-        html += '<tr><td>' + dateStr + '</td><td class="' + (isSunday ? 'sunday' : '') + '">' + JOURS_FRANCAIS[date.getDay()] + (isHoliday ? ' 🎉' : '') + '</td><td style="background:' + SHIFT_COLORS[shift] + ';color:white;text-align:center">' + shift + '</td><td>' + SHIFT_LABELS[shift] + extraInfo + '</td><td><button class="action-btn small blue" onclick="showShiftModification(\'' + agentCode + '\',\'' + dateStr + '\')">✏️</button><button class="action-btn small red" onclick="showAddLeaveForDate(\'' + agentCode + '\',\'' + dateStr + '\')">🚫</button></td></tr>';
+        html += '汽笛<td>' + dateStr + '汽笛<td class="' + (isSunday ? 'sunday' : '') + '">' + JOURS_FRANCAIS[date.getDay()] + (isHoliday ? ' 🎉' : '') + '汽笛<td style="background:' + SHIFT_COLORS[shift] + ';color:white;text-align:center">' + shift + '汽笛>' + SHIFT_LABELS[shift] + extraInfo + '汽笛><button class="action-btn small blue" onclick="showShiftModification(\'' + agentCode + '\',\'' + dateStr + '\')">✏️</button><button class="action-btn small red" onclick="showAddLeaveForDate(\'' + agentCode + '\',\'' + dateStr + '\')">🚫</button>汽笛';
     }
     html += '</tbody>赶趟</div>';
     openPopup("Planning " + agent.code, html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function showShiftModification(agentCode, dateStr) {
-    var currentShift = getShiftForAgent(agentCode, dateStr);
-    var shiftOptions = '';
-    for (var k in SHIFT_LABELS) {
+    const currentShift = getShiftForAgent(agentCode, dateStr);
+    let shiftOptions = '';
+    for (const k in SHIFT_LABELS) {
         shiftOptions += '<option value="' + k + '" ' + (k === currentShift ? 'selected' : '') + '>' + k + ' - ' + SHIFT_LABELS[k] + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><input type="text" value="' + agentCode + '" readonly></div><div class="form-group"><label>Date</label><input type="text" value="' + dateStr + '" readonly></div><div class="form-group"><label>Shift actuel</label><input type="text" value="' + SHIFT_LABELS[currentShift] + ' (' + currentShift + ')" readonly></div><div class="form-group"><label>Nouveau shift</label><select id="newShiftValue">' + shiftOptions + '</select></div></div>';
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><input type="text" value="' + agentCode + '" readonly></div><div class="form-group"><label>Date</label><input type="text" value="' + dateStr + '" readonly></div><div class="form-group"><label>Shift actuel</label><input type="text" value="' + SHIFT_LABELS[currentShift] + ' (' + currentShift + ')" readonly></div><div class="form-group"><label>Nouveau shift</label><select id="newShiftValue">' + shiftOptions + '</select></div></div>';
     openPopup("Modifier Shift", html, '<button class="popup-button green" onclick="applyShiftModificationDirect(\'' + agentCode + '\',\'' + dateStr + '\')">Appliquer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function applyShiftModificationDirect(agentCode, dateStr) {
-    var newShift = document.getElementById('newShiftValue').value;
-    var monthKey = dateStr.substring(0,7);
+    const newShift = document.getElementById('newShiftValue').value;
+    const monthKey = dateStr.substring(0,7);
     if (!planningData[monthKey]) planningData[monthKey] = {};
     if (!planningData[monthKey][agentCode]) planningData[monthKey][agentCode] = {};
     planningData[monthKey][agentCode][dateStr] = { shift: newShift, type: 'modification', modified_at: new Date().toISOString() };
@@ -855,27 +871,27 @@ function applyShiftModificationDirect(agentCode, dateStr) {
 }
 
 function showShiftModificationForm() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var shiftOptions = '';
-    for (var k in SHIFT_LABELS) {
+    let shiftOptions = '';
+    for (const k in SHIFT_LABELS) {
         shiftOptions += '<option value="' + k + '">' + k + ' - ' + SHIFT_LABELS[k] + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="shiftAgent">' + agentOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="shiftAgent">' + agentOptions + '</select></div>' +
     '<div class="form-group"><label>Date</label><input type="date" id="shiftDate" value="' + new Date().toISOString().split('T')[0] + '"></div>' +
     '<div class="form-group"><label>Nouveau shift</label><select id="newShift">' + shiftOptions + '</select></div></div>';
     openPopup("Modifier Shift", html, '<button class="popup-button green" onclick="applyShiftModification()">Appliquer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function applyShiftModification() {
-    var agentCode = document.getElementById('shiftAgent').value;
-    var dateStr = document.getElementById('shiftDate').value;
-    var newShift = document.getElementById('newShift').value;
-    var monthKey = dateStr.substring(0,7);
+    const agentCode = document.getElementById('shiftAgent').value;
+    const dateStr = document.getElementById('shiftDate').value;
+    const newShift = document.getElementById('newShift').value;
+    const monthKey = dateStr.substring(0,7);
     if (!planningData[monthKey]) planningData[monthKey] = {};
     if (!planningData[monthKey][agentCode]) planningData[monthKey][agentCode] = {};
     planningData[monthKey][agentCode][dateStr] = { shift: newShift, type: 'modification', modified_at: new Date().toISOString() };
@@ -885,13 +901,13 @@ function applyShiftModification() {
 }
 
 function showShiftExchangeForm() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent 1</label><select id="exAgent1">' + agentOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Agent 1</label><select id="exAgent1">' + agentOptions + '</select></div>' +
     '<div class="form-group"><label>Date 1</label><input type="date" id="exDate1"></div>' +
     '<div class="form-group"><label>Agent 2</label><select id="exAgent2">' + agentOptions + '</select></div>' +
     '<div class="form-group"><label>Date 2</label><input type="date" id="exDate2"></div></div>';
@@ -899,11 +915,11 @@ function showShiftExchangeForm() {
 }
 
 function executeShiftExchange() {
-    var a1 = document.getElementById('exAgent1').value, d1 = document.getElementById('exDate1').value;
-    var a2 = document.getElementById('exAgent2').value, d2 = document.getElementById('exDate2').value;
+    const a1 = document.getElementById('exAgent1').value, d1 = document.getElementById('exDate1').value;
+    const a2 = document.getElementById('exAgent2').value, d2 = document.getElementById('exDate2').value;
     if (!d1 || !d2) { showSnackbar("Veuillez sélectionner les dates"); return; }
-    var s1 = getShiftForAgent(a1, d1), s2 = getShiftForAgent(a2, d2);
-    var m1 = d1.substring(0,7), m2 = d2.substring(0,7);
+    const s1 = getShiftForAgent(a1, d1), s2 = getShiftForAgent(a2, d2);
+    const m1 = d1.substring(0,7), m2 = d2.substring(0,7);
     if (!planningData[m1]) planningData[m1] = {};
     if (!planningData[m1][a1]) planningData[m1][a1] = {};
     planningData[m1][a1][d1] = { shift: s2, type: 'echange' };
@@ -916,19 +932,19 @@ function executeShiftExchange() {
 }
 
 function showExportPlanningMenu() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + ' (' + a.code + ')</option>';
     }
-    var monthOptions = '';
-    var currentMonth = new Date().getMonth() + 1;
-    for (var i = 0; i < 12; i++) {
-        var selected = (i+1 === currentMonth) ? 'selected' : '';
+    let monthOptions = '';
+    const currentMonth = new Date().getMonth() + 1;
+    for (let i = 0; i < 12; i++) {
+        const selected = (i+1 === currentMonth) ? 'selected' : '';
         monthOptions += '<option value="' + (i+1) + '" ' + selected + '>' + getMonthName(i+1) + '</option>';
     }
-    var html = '<div class="info-section">' +
+    const html = '<div class="info-section">' +
         '<h3>📊 Exporter le planning en Excel</h3>' +
         '<div class="form-group"><label>Type d\'export</label><select id="exportType"><option value="global">Planning global</option><option value="groupe">Par groupe</option><option value="agent">Par agent</option></select></div>' +
         '<div id="exportGroupDiv" style="display:none"><div class="form-group"><label>Groupe</label><select id="exportGroup"><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div></div>' +
@@ -937,29 +953,29 @@ function showExportPlanningMenu() {
         '<div class="form-group"><label>Année</label><input type="number" id="exportYear" value="' + new Date().getFullYear() + '"></div>' +
         '</div>';
     openPopup("Exporter Planning (Excel)", html, '<button class="popup-button green" onclick="exportPlanningToExcel()">📥 Exporter</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
-    var exportType = document.getElementById('exportType');
+    const exportType = document.getElementById('exportType');
     exportType.addEventListener('change', function() {
-        var val = this.value;
-        var groupDiv = document.getElementById('exportGroupDiv');
-        var agentDiv = document.getElementById('exportAgentDiv');
+        const val = this.value;
+        const groupDiv = document.getElementById('exportGroupDiv');
+        const agentDiv = document.getElementById('exportAgentDiv');
         if (groupDiv) groupDiv.style.display = val === 'groupe' ? 'block' : 'none';
         if (agentDiv) agentDiv.style.display = val === 'agent' ? 'block' : 'none';
     });
 }
 
 function exportPlanningToExcel() {
-    var type = document.getElementById('exportType').value;
-    var month = parseInt(document.getElementById('exportMonth').value, 10);
-    var year = parseInt(document.getElementById('exportYear').value, 10);
-    var agentsToExport = [];
+    const type = document.getElementById('exportType').value;
+    const month = parseInt(document.getElementById('exportMonth').value, 10);
+    const year = parseInt(document.getElementById('exportYear').value, 10);
+    let agentsToExport = [];
 
     if (type === 'global') agentsToExport = agents.filter(function(a) { return a.statut === 'actif'; });
     else if (type === 'groupe') {
-        var group = document.getElementById('exportGroup').value;
+        const group = document.getElementById('exportGroup').value;
         agentsToExport = agents.filter(function(a) { return a.groupe === group && a.statut === 'actif'; });
     } else {
-        var agentCode = document.getElementById('exportAgent').value;
-        var agent = agents.find(function(a) { return a.code === agentCode; });
+        const agentCode = document.getElementById('exportAgent').value;
+        const agent = agents.find(function(a) { return a.code === agentCode; });
         if (agent) agentsToExport = [agent];
     }
 
@@ -968,33 +984,33 @@ function exportPlanningToExcel() {
         return;
     }
 
-    var daysInMonth = new Date(year, month, 0).getDate();
+    const daysInMonth = new Date(year, month, 0).getDate();
     
-    var html = '<html><head><meta charset="UTF-8"><title>Planning ' + getMonthName(month) + ' ' + year + '</title>' +
+    let html = '<html><head><meta charset="UTF-8"><title>Planning ' + getMonthName(month) + ' ' + year + '</title>' +
         '<style>table{border-collapse:collapse;} th,td{border:1px solid #000;padding:4px;text-align:center;} th{background-color:#34495e;color:white;}</style>' +
-        '</head><body><h2>Planning ' + getMonthName(month) + ' ' + year + '</h2><table><thead><tr><th>Agent</th>';
-    for (var d = 1; d <= daysInMonth; d++) {
-        var date = new Date(year, month-1, d);
+        '</head><body><h2>Planning ' + getMonthName(month) + ' ' + year + '</h2><table><thead> <tr><th>Agent</th>';
+    for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(year, month-1, d);
         html += '<th>' + d + '<br>' + JOURS_FRANCAIS[date.getDay()].substring(0,2) + '</th>';
     }
     html += '<th>Total</th></tr></thead><tbody>';
 
-    for (var i = 0; i < agentsToExport.length; i++) {
-        var agent = agentsToExport[i];
-        var stats = calculateWorkedDays(agent.code, month, year);
+    for (let i = 0; i < agentsToExport.length; i++) {
+        const agent = agentsToExport[i];
+        const stats = calculateWorkedDays(agent.code, month, year);
         html += '<tr><td><strong>' + agent.nom + ' ' + agent.prenom + '</strong><br><small>' + agent.code + '</small></td>';
-        for (var d = 1; d <= daysInMonth; d++) {
-            var dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-            var shift = getShiftForAgent(agent.code, dateStr);
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+            const shift = getShiftForAgent(agent.code, dateStr);
             html += '<td>' + shift + '</td>';
         }
         html += '<td><strong>' + stats.totalDays + '</strong></td></tr>';
     }
-    html += '</tbody></table><p><small>Total = travaillés (1,2,3) + fériés chômés</small></p></body></html>';
+    html += '</tbody> </table><p><small>Total = travaillés (1,2,3) + fériés chômés</small></p></body></html>';
 
-    var blob = new Blob([html], { type: 'application/vnd.ms-excel' });
-    var link = document.createElement('a');
-    var url = URL.createObjectURL(blob);
+    const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
     link.href = url;
     link.download = 'planning_' + type + '_' + getMonthName(month) + '_' + year + '.xls';
     document.body.appendChild(link);
@@ -1019,26 +1035,26 @@ function displayStatsMenu() {
 }
 
 function showGlobalStats() {
-    var active = agents.filter(function(a) { return a.statut === 'actif'; });
-    var today = new Date();
-    var month = today.getMonth()+1, year = today.getFullYear();
-    var totalWorked=0, totalDays=0, totalLeaves=0, totalHolidayWorked=0;
-    var groups = {};
-    for (var i = 0; i < active.length; i++) {
-        var a = active[i];
+    const active = agents.filter(function(a) { return a.statut === 'actif'; });
+    const today = new Date();
+    const month = today.getMonth()+1, year = today.getFullYear();
+    let totalWorked=0, totalDays=0, totalLeaves=0, totalHolidayWorked=0;
+    const groups = {};
+    for (let i = 0; i < active.length; i++) {
+        const a = active[i];
         groups[a.groupe] = (groups[a.groupe]||0)+1;
-        var stats = calculateWorkedDays(a.code, month, year);
+        const stats = calculateWorkedDays(a.code, month, year);
         totalWorked += stats.workedDays;
         totalDays += stats.totalDays;
         totalLeaves += stats.leaveDays;
         totalHolidayWorked += stats.holidayWorkedDays;
     }
-    var avgRate = totalDays ? Math.round(totalWorked/totalDays*100) : 0;
-    var groupStr = '';
-    for (var g in groups) {
+    const avgRate = totalDays ? Math.round(totalWorked/totalDays*100) : 0;
+    let groupStr = '';
+    for (const g in groups) {
         groupStr += 'Groupe ' + g + ': ' + groups[g] + ' | ';
     }
-    var html = '<div class="info-section"><h3>Statistiques Globales - ' + getMonthName(month) + ' ' + year + '</h3>' +
+    const html = '<div class="info-section"><h3>Statistiques Globales - ' + getMonthName(month) + ' ' + year + '</h3>' +
         '<p><strong>Agents actifs:</strong> ' + active.length + '</p>' +
         '<p><strong>Total jours:</strong> ' + totalDays + ' (' + totalWorked + ' travaillés + ' + totalHolidayWorked + ' fériés)</p>' +
         '<p><strong>Taux de présence:</strong> ' + avgRate + '%</p>' +
@@ -1050,24 +1066,24 @@ function showGlobalStats() {
 }
 
 function showAgentStatsSelector() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><select id="statsAgent">' + agentOptions + '</select><div id="statsResult"></div></div>';
+    const html = '<div class="info-section"><select id="statsAgent">' + agentOptions + '</select><div id="statsResult"></div></div>';
     openPopup("Statistiques Agent", html, '<button class="popup-button green" onclick="showAgentStats()">Voir</button><button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function showAgentStats() {
-    var agentCode = document.getElementById('statsAgent').value;
-    var agent = agents.find(function(a) { return a.code === agentCode; });
+    const agentCode = document.getElementById('statsAgent').value;
+    const agent = agents.find(function(a) { return a.code === agentCode; });
     if (!agent) return;
-    var today = new Date();
-    var month = today.getMonth()+1, year = today.getFullYear();
-    var stats = calculateWorkedDays(agentCode, month, year);
-    var html = '<div><p><strong>' + agent.nom + ' ' + agent.prenom + '</strong> (' + agent.code + ') - Groupe ' + agent.groupe + '</p>' +
+    const today = new Date();
+    const month = today.getMonth()+1, year = today.getFullYear();
+    const stats = calculateWorkedDays(agentCode, month, year);
+    const html = '<div><p><strong>' + agent.nom + ' ' + agent.prenom + '</strong> (' + agent.code + ') - Groupe ' + agent.groupe + '</p>' +
         '<p><strong>Statistiques ' + getMonthName(month) + ' ' + year + ':</strong></p>' +
         '<p>📊 Total jours = ' + stats.totalDays + ' (' + stats.workedDays + ' travaillés + ' + stats.holidayWorkedDays + ' fériés)</p>' +
         '<p>📅 Jours fériés chômés: ' + stats.holidayWorkedDays + '</p>' +
@@ -1078,44 +1094,44 @@ function showAgentStats() {
 }
 
 function showRanking() {
-    var today = new Date();
-    var month = today.getMonth()+1, year = today.getFullYear();
-    var ranking = [];
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
-        var stats = calculateWorkedDays(a.code, month, year);
+    const today = new Date();
+    const month = today.getMonth()+1, year = today.getFullYear();
+    const ranking = [];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
+        const stats = calculateWorkedDays(a.code, month, year);
         ranking.push({ agent: a, stats: stats });
     }
     ranking.sort(function(a,b) { return b.stats.totalDays - a.stats.totalDays; });
-    var html = '<div class="info-section"><h3>Classement des Agents - ' + getMonthName(month) + ' ' + year + '</h3>' +
+    let html = '<div class="info-section"><h3>Classement des Agents - ' + getMonthName(month) + ' ' + year + '</h3>' +
         '<p><small>Classement basé sur le total jours = travaillés + fériés chômés</small></p>' +
         '<table class="classement-table"><thead><th>Rang</th><th>Agent</th><th>Groupe</th><th>Total jours</th><th>Travaillés</th><th>Fériés</th><th>Congés</th><th>Taux</th></thead><tbody>';
-    for (var i = 0; i < ranking.length; i++) {
-        var r = ranking[i];
-        var a = r.agent;
-        var s = r.stats;
-        var taux = Math.round(s.workedDays/s.totalDays*100);
+    for (let i = 0; i < ranking.length; i++) {
+        const r = ranking[i];
+        const a = r.agent;
+        const s = r.stats;
+        const taux = Math.round(s.workedDays/s.totalDays*100);
         html += '<tr><td class="rank-' + (i+1) + '">' + (i+1) + '</td><td><strong>' + a.nom + ' ' + a.prenom + '</strong><br><small>' + a.code + '</small></td><td>' + a.groupe + '</td><td class="total-value">' + s.totalDays + '</td><td>' + s.workedDays + '</td><td>' + s.holidayWorkedDays + '</td><td>' + s.leaveDays + '</td><td>' + taux + '%</td></tr>';
     }
-    html += '</tbody>赶趟</div>';
+    html += '</tbody> </table></div>';
     openPopup("Classement des Agents", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function showAdvancedAgentStats() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var monthOptions = '';
-    var currentMonth = new Date().getMonth() + 1;
-    for (var i = 0; i < 12; i++) {
-        var selected = (i+1 === currentMonth) ? 'selected' : '';
+    let monthOptions = '';
+    const currentMonth = new Date().getMonth() + 1;
+    for (let i = 0; i < 12; i++) {
+        const selected = (i+1 === currentMonth) ? 'selected' : '';
         monthOptions += '<option value="' + (i+1) + '" ' + selected + '>' + getMonthName(i+1) + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="advStatsAgent">' + agentOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="advStatsAgent">' + agentOptions + '</select></div>' +
         '<div class="form-group"><label>Mois</label><select id="advStatsMonth">' + monthOptions + '</select></div>' +
         '<div class="form-group"><label>Année</label><input type="number" id="advStatsYear" value="' + new Date().getFullYear() + '"></div>' +
         '<div id="advStatsResult"></div></div>';
@@ -1123,36 +1139,36 @@ function showAdvancedAgentStats() {
 }
 
 function afficherStatsAvancees() {
-    var agentCode = document.getElementById('advStatsAgent').value;
-    var mois = parseInt(document.getElementById('advStatsMonth').value, 10);
-    var annee = parseInt(document.getElementById('advStatsYear').value, 10);
-    var stats = obtenirStatsDetailleesAgent(agentCode, mois, annee);
+    const agentCode = document.getElementById('advStatsAgent').value;
+    const mois = parseInt(document.getElementById('advStatsMonth').value, 10);
+    const annee = parseInt(document.getElementById('advStatsYear').value, 10);
+    const stats = obtenirStatsDetailleesAgent(agentCode, mois, annee);
     if (stats.erreur) { document.getElementById('advStatsResult').innerHTML = '<p style="color:red">' + stats.erreur + '</p>'; return; }
-    var ind = stats.indicateurs_avances;
-    var shiftsTable = '<h4>Répartition des shifts par jour de semaine</h4><table class="classement-table"><thead><th>Jour</th><th>Matin</th><th>Après-midi</th><th>Nuit</th><th>Repos</th><th>Congé</th><th>Maladie</th><th>Autre</th></thead><tbody>';
-    for (var jour in ind.shifts_par_jour) {
-        var counts = ind.shifts_par_jour[jour];
+    const ind = stats.indicateurs_avances;
+    let shiftsTable = '<h4>Répartition des shifts par jour de semaine</h4><table class="classement-table"><thead><th>Jour</th><th>Matin</th><th>Après-midi</th><th>Nuit</th><th>Repos</th><th>Congé</th><th>Maladie</th><th>Autre</th></thead><tbody>';
+    for (const jour in ind.shifts_par_jour) {
+        const counts = ind.shifts_par_jour[jour];
         shiftsTable += '<tr><td>' + jour + '</td><td>' + counts['1'] + '</td><td>' + counts['2'] + '</td><td>' + counts['3'] + '</td><td>' + counts['R'] + '</td><td>' + counts['C'] + '</td><td>' + counts['M'] + '</td><td>' + counts['A'] + '</td></tr>';
     }
-    shiftsTable += '</tbody>赶趟';
-    var html = '<div><p><strong>' + stats.nom_complet + '</strong> (' + stats.agent + ') - Groupe ' + stats.groupe + '</p><p>Période : ' + getMonthName(mois) + ' ' + annee + '</p><hr>' +
+    shiftsTable += '</tbody></table>';
+    const html = '<div><p><strong>' + stats.nom_complet + '</strong> (' + stats.agent + ') - Groupe ' + stats.groupe + '</p><p>Période : ' + getMonthName(mois) + ' ' + annee + '</p><hr>' +
         '<ul><li>Jours travaillés (shifts 1,2,3) : ' + ind.jours_travailles + '</li><li>Jours de repos (R) : ' + ind.jours_repos + '</li><li>Congés (C) : ' + ind.jours_conges + '</li><li>Maladie (M) : ' + ind.jours_maladie + '</li><li>Autres absences (A) : ' + ind.jours_autres + '</li><li>Jours fériés chômés : ' + ind.jours_feries_travailles + '</li><li>Total jours (travaillés + fériés) : ' + ind.total_jours + '</li><li>Taux de présence : ' + ind.taux_presence + '%</li></ul>' + shiftsTable + '<p><small>Les congés ne sont pas comptabilisés dans le total.</small></p></div>';
     document.getElementById('advStatsResult').innerHTML = html;
 }
 
 function showGroupRanking() {
-    var groups = ['A','B','C','D','E'];
-    var groupOptions = '';
-    for (var i = 0; i < groups.length; i++) {
+    const groups = ['A','B','C','D','E'];
+    let groupOptions = '';
+    for (let i = 0; i < groups.length; i++) {
         groupOptions += '<option value="' + groups[i] + '">Groupe ' + groups[i] + '</option>';
     }
-    var monthOptions = '';
-    var currentMonth = new Date().getMonth() + 1;
-    for (var i = 0; i < 12; i++) {
-        var selected = (i+1 === currentMonth) ? 'selected' : '';
+    let monthOptions = '';
+    const currentMonth = new Date().getMonth() + 1;
+    for (let i = 0; i < 12; i++) {
+        const selected = (i+1 === currentMonth) ? 'selected' : '';
         monthOptions += '<option value="' + (i+1) + '" ' + selected + '>' + getMonthName(i+1) + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Groupe</label><select id="rankGroup">' + groupOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Groupe</label><select id="rankGroup">' + groupOptions + '</select></div>' +
         '<div class="form-group"><label>Mois</label><select id="rankMonth">' + monthOptions + '</select></div>' +
         '<div class="form-group"><label>Année</label><input type="number" id="rankYear" value="' + new Date().getFullYear() + '"></div>' +
         '<div id="rankResult"></div></div>';
@@ -1160,44 +1176,44 @@ function showGroupRanking() {
 }
 
 function afficherClassementGroupe() {
-    var groupe = document.getElementById('rankGroup').value;
-    var mois = parseInt(document.getElementById('rankMonth').value, 10);
-    var annee = parseInt(document.getElementById('rankYear').value, 10);
-    var classement = obtenirClassementGroupe(groupe, mois, annee);
+    const groupe = document.getElementById('rankGroup').value;
+    const mois = parseInt(document.getElementById('rankMonth').value, 10);
+    const annee = parseInt(document.getElementById('rankYear').value, 10);
+    const classement = obtenirClassementGroupe(groupe, mois, annee);
     if (classement.erreur) { document.getElementById('rankResult').innerHTML = '<p style="color:red">' + classement.erreur + '</p>'; return; }
-    var table = '<h3>Classement Groupe ' + groupe + ' - ' + getMonthName(mois) + ' ' + annee + '</h3><table class="classement-table"><thead><th>Rang</th><th>Agent</th><th>CPA</th></thead><tbody>';
-    for (var i = 0; i < classement.classement.length; i++) {
-        var a = classement.classement[i];
-        table += '汽笛<td class="rank-' + a.rang + '">' + a.rang + '汽笛>' + a.nom_complet + '汽笛>' + a.cpa + '汽笛</tr>';
+    let table = '<h3>Classement Groupe ' + groupe + ' - ' + getMonthName(mois) + ' ' + annee + '</h3><table class="classement-table"><thead><th>Rang</th><th>Agent</th><th>CPA</th></thead><tbody>';
+    for (let i = 0; i < classement.classement.length; i++) {
+        const a = classement.classement[i];
+        table += '汽笛<td class="rank-' + a.rang + '">' + a.rang + '汽笛>' + a.nom_complet + '汽笛>' + a.cpa + '汽笛';
     }
     table += '</tbody>赶趟';
     document.getElementById('rankResult').innerHTML = table;
 }
 
 function showMonthlyEvolution() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="evolAgent">' + agentOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="evolAgent">' + agentOptions + '</select></div>' +
         '<div class="form-group"><label>Nombre de mois</label><input type="number" id="evolMonths" value="6" min="1" max="12"></div>' +
         '<div id="evolResult"></div></div>';
     openPopup("Évolution Mensuelle", html, '<button class="popup-button green" onclick="afficherEvolution()">Analyser</button><button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function afficherEvolution() {
-    var agentCode = document.getElementById('evolAgent').value;
-    var nbMois = parseInt(document.getElementById('evolMonths').value, 10);
-    var evol = obtenirEvolutionMensuelle(agentCode, nbMois);
-    var table = '<h3>Évolution mensuelle de ' + agentCode + '</h3><table class="classement-table"><thead><th>Période</th><th>CPA</th></thead><tbody>';
-    for (var i = 0; i < evol.evolution.length; i++) {
-        var e = evol.evolution[i];
-        table += '汽笛<td class="periode">' + e.periode + '汽笛<td class="valeur">' + e.cpa + '汽笛</tr>';
+    const agentCode = document.getElementById('evolAgent').value;
+    const nbMois = parseInt(document.getElementById('evolMonths').value, 10);
+    const evol = obtenirEvolutionMensuelle(agentCode, nbMois);
+    let table = '<h3>Évolution mensuelle de ' + agentCode + '</h3><table class="classement-table"><thead><th>Période</th><th>CPA</th></thead><tbody>';
+    for (let i = 0; i < evol.evolution.length; i++) {
+        const e = evol.evolution[i];
+        table += '汽笛<td class="periode">' + e.periode + '汽笛<td class="valeur">' + e.cpa + '汽笛';
     }
     table += '</tbody>赶趟';
-    var tendanceColor = evol.tendance >= 0 ? '#27ae60' : '#e74c3c';
+    const tendanceColor = evol.tendance >= 0 ? '#27ae60' : '#e74c3c';
     table += '<p><strong>Tendance :</strong> <span style="color:' + tendanceColor + '">' + evol.tendance + '%</span> sur ' + nbMois + ' mois</p>';
     document.getElementById('evolResult').innerHTML = table;
 }
@@ -1216,46 +1232,46 @@ function displayLeavesMenu() {
 }
 
 function showAddLeaveForm() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + ' (' + a.code + ') - Groupe ' + a.groupe + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Type d\'absence:</label><select id="leaveType"><option value="C">Congé payé (C)</option><option value="M">Maladie (M)</option><option value="A">Autre absence (A)</option><option value="periode">Congé sur période</option></select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Type d\'absence:</label><select id="leaveType"><option value="C">Congé payé (C)</option><option value="M">Maladie (M)</option><option value="A">Autre absence (A)</option><option value="periode">Congé sur période</option></select></div>' +
         '<div class="form-group"><label>Agent</label><select id="leaveAgent">' + agentOptions + '</select></div>' +
         '<div id="singleLeaveSection"><div class="form-group"><label>Date</label><input type="date" id="leaveDate" value="' + new Date().toISOString().split('T')[0] + '"></div></div>' +
         '<div id="periodLeaveSection" style="display:none"><div style="display:grid;grid-template-columns:1fr 1fr;gap:15px"><div class="form-group"><label>Date début</label><input type="date" id="leaveStartDate"></div><div class="form-group"><label>Date fin</label><input type="date" id="leaveEndDate"></div></div><div class="form-group"><label>Gestion des dimanches</label><select id="sundayHandling"><option value="repos">Dimanches restent en repos (R)</option><option value="conge">Dimanches comptent comme congé (C)</option></select></div></div>' +
         '<div class="form-group"><label>Commentaire</label><textarea id="leaveComment" rows="2"></textarea></div></div>';
     openPopup("Ajouter Congé/Absence", html, '<button class="popup-button green" onclick="saveLeave()">Enregistrer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
     document.getElementById('leaveType').addEventListener('change', function() {
-        var type = this.value;
-        var singleDiv = document.getElementById('singleLeaveSection');
-        var periodDiv = document.getElementById('periodLeaveSection');
+        const type = this.value;
+        const singleDiv = document.getElementById('singleLeaveSection');
+        const periodDiv = document.getElementById('periodLeaveSection');
         if (singleDiv) singleDiv.style.display = type === 'periode' ? 'none' : 'block';
         if (periodDiv) periodDiv.style.display = type === 'periode' ? 'block' : 'none';
     });
 }
 
 function saveLeave() {
-    var leaveType = document.getElementById('leaveType').value;
-    var agentCode = document.getElementById('leaveAgent').value;
-    var comment = document.getElementById('leaveComment').value;
+    const leaveType = document.getElementById('leaveType').value;
+    const agentCode = document.getElementById('leaveAgent').value;
+    const comment = document.getElementById('leaveComment').value;
     if (leaveType === 'periode') {
-        var startDate = document.getElementById('leaveStartDate').value;
-        var endDate = document.getElementById('leaveEndDate').value;
-        var sundayHandling = document.getElementById('sundayHandling').value;
+        const startDate = document.getElementById('leaveStartDate').value;
+        const endDate = document.getElementById('leaveEndDate').value;
+        const sundayHandling = document.getElementById('sundayHandling').value;
         if (!startDate || !endDate) { showSnackbar("Veuillez spécifier les dates"); return; }
         if (new Date(startDate) > new Date(endDate)) { showSnackbar("La date de début doit être avant la fin"); return; }
-        var leaveRecord = { id: 'L'+Date.now(), agent_code: agentCode, type: 'C', start_date: startDate, end_date: endDate, sunday_handling: sundayHandling, comment: comment, created_at: new Date().toISOString(), status: 'active' };
+        const leaveRecord = { id: 'L'+Date.now(), agent_code: agentCode, type: 'C', start_date: startDate, end_date: endDate, sunday_handling: sundayHandling, comment: comment, created_at: new Date().toISOString(), status: 'active' };
         if (!leaves) leaves = [];
         leaves.push(leaveRecord);
         applyPeriodLeave(agentCode, startDate, endDate, sundayHandling);
         showSnackbar("Congé sur période enregistré pour " + agentCode + " du " + startDate + " au " + endDate);
     } else {
-        var leaveDate = document.getElementById('leaveDate').value;
+        const leaveDate = document.getElementById('leaveDate').value;
         if (!leaveDate) { showSnackbar("Veuillez spécifier une date"); return; }
-        var monthKey = leaveDate.substring(0,7);
+        const monthKey = leaveDate.substring(0,7);
         if (!planningData[monthKey]) planningData[monthKey] = {};
         if (!planningData[monthKey][agentCode]) planningData[monthKey][agentCode] = {};
         planningData[monthKey][agentCode][leaveDate] = { shift: leaveType, type: 'absence', comment: comment, recorded_at: new Date().toISOString() };
@@ -1266,15 +1282,15 @@ function saveLeave() {
 }
 
 function applyPeriodLeave(agentCode, startDate, endDate, sundayHandling) {
-    var start = new Date(startDate), end = new Date(endDate);
-    var current = new Date(start);
-    var periodId = 'L'+Date.now();
+    const start = new Date(startDate), end = new Date(endDate);
+    let current = new Date(start);
+    const periodId = 'L'+Date.now();
     while (current <= end) {
-        var dateStr = current.toISOString().split('T')[0];
-        var dayOfWeek = current.getDay();
-        var shiftType = 'C';
+        const dateStr = current.toISOString().split('T')[0];
+        const dayOfWeek = current.getDay();
+        let shiftType = 'C';
         if (dayOfWeek === 0) shiftType = sundayHandling === 'repos' ? 'R' : 'C';
-        var monthKey = dateStr.substring(0,7);
+        const monthKey = dateStr.substring(0,7);
         if (!planningData[monthKey]) planningData[monthKey] = {};
         if (!planningData[monthKey][agentCode]) planningData[monthKey][agentCode] = {};
         planningData[monthKey][agentCode][dateStr] = { shift: shiftType, type: 'congé_periode', period_id: periodId, recorded_at: new Date().toISOString() };
@@ -1283,11 +1299,11 @@ function applyPeriodLeave(agentCode, startDate, endDate, sundayHandling) {
 }
 
 function showLeavesList() {
-    var leavesByAgent = {};
-    for (var monthKey in planningData) {
-        for (var agentCode in planningData[monthKey]) {
-            for (var dateStr in planningData[monthKey][agentCode]) {
-                var record = planningData[monthKey][agentCode][dateStr];
+    const leavesByAgent = {};
+    for (const monthKey in planningData) {
+        for (const agentCode in planningData[monthKey]) {
+            for (const dateStr in planningData[monthKey][agentCode]) {
+                const record = planningData[monthKey][agentCode][dateStr];
                 if (record && (record.shift === 'C' || record.shift === 'M' || record.shift === 'A')) {
                     if (!leavesByAgent[agentCode]) leavesByAgent[agentCode] = [];
                     leavesByAgent[agentCode].push({ date: dateStr, type: record.shift, comment: record.comment || '', recorded_at: record.recorded_at });
@@ -1296,19 +1312,19 @@ function showLeavesList() {
         }
     }
     if (leaves) {
-        for (var i = 0; i < leaves.length; i++) {
-            var leave = leaves[i];
+        for (let i = 0; i < leaves.length; i++) {
+            const leave = leaves[i];
             if (!leavesByAgent[leave.agent_code]) leavesByAgent[leave.agent_code] = [];
             leavesByAgent[leave.agent_code].push({ date: leave.start_date + " au " + leave.end_date, type: 'Période', comment: leave.comment || '', recorded_at: leave.created_at, is_period: true });
         }
     }
-    var agentOptions = '<option value="all">Tous les agents</option>';
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    let agentOptions = '<option value="all">Tous les agents</option>';
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><h3>Liste des congés et absences</h3><div style="margin-bottom:15px"><select id="leavesFilter" onchange="filterLeavesList()">' + agentOptions + '</select>' +
+    const html = '<div class="info-section"><h3>Liste des congés et absences</h3><div style="margin-bottom:15px"><select id="leavesFilter" onchange="filterLeavesList()">' + agentOptions + '</select>' +
         '<select id="leavesTypeFilter" onchange="filterLeavesList()" style="margin-left:10px"><option value="all">Tous les types</option><option value="C">Congés</option><option value="M">Maladie</option><option value="A">Autre</option><option value="Période">Périodes</option></select></div>' +
         '<div id="leavesListContainer">' + generateLeavesList(leavesByAgent) + '</div></div>';
     openPopup("Liste des Congés/Absences", html, '<button class="popup-button green" onclick="showAddLeaveForm()">➕ Ajouter</button><button class="popup-button blue" onclick="exportLeavesReport()">📊 Exporter</button><button class="popup-button gray" onclick="closePopup()">Fermer</button>');
@@ -1317,41 +1333,41 @@ function showLeavesList() {
 function generateLeavesList(leavesByAgent, filterAgent, filterType) {
     if (filterAgent === undefined) filterAgent = 'all';
     if (filterType === undefined) filterType = 'all';
-    var html = '';
-    for (var agentCode in leavesByAgent) {
-        var agent = agents.find(function(a) { return a.code === agentCode; });
+    let html = '';
+    for (const agentCode in leavesByAgent) {
+        const agent = agents.find(function(a) { return a.code === agentCode; });
         if (!agent) continue;
         if (filterAgent !== 'all' && agentCode !== filterAgent) continue;
-        var agentLeaves = leavesByAgent[agentCode].filter(function(l) {
+        const agentLeaves = leavesByAgent[agentCode].filter(function(l) {
             if (filterType === 'all') return true;
             if (filterType === 'Période') return l.is_period;
             return l.type === filterType;
         });
         if (agentLeaves.length === 0) continue;
         html += '<div style="margin-bottom:20px;padding:15px;background:#34495e;border-radius:5px"><h4>' + agent.nom + ' ' + agent.prenom + ' (' + agent.code + ')</h4><table class="classement-table"><thead><th>Date(s)</th><th>Type</th><th>Commentaire</th><th>Enregistré le</th><th>Actions</th></thead><tbody>';
-        for (var i = 0; i < agentLeaves.length; i++) {
-            var l = agentLeaves[i];
-            html += '<tr><td>' + l.date + '</td><td><span style="background:' + (SHIFT_COLORS[l.type] || '#7f8c8d') + ';color:white;padding:2px 8px;border-radius:3px">' + l.type + '</span></td><td>' + (l.comment || '-') + '</td><td>' + new Date(l.recorded_at).toLocaleDateString() + '</td><td>';
+        for (let i = 0; i < agentLeaves.length; i++) {
+            const l = agentLeaves[i];
+            html += '汽笛>' + l.date + '汽笛><span style="background:' + (SHIFT_COLORS[l.type] || '#7f8c8d') + ';color:white;padding:2px 8px;border-radius:3px">' + l.type + '</span>汽笛>' + (l.comment || '-') + '汽笛>' + new Date(l.recorded_at).toLocaleDateString() + '汽笛>';
             if (l.is_period) {
                 html += '<button class="action-btn small red" onclick="deletePeriodLeave(\'' + agentCode + '\',\'' + l.date.split(' au ')[0] + '\')">🗑️</button>';
             } else {
                 html += '<button class="action-btn small red" onclick="deleteSingleLeave(\'' + agentCode + '\',\'' + l.date + '\')">🗑️</button>';
             }
-            html += '</td></tr>';
+            html += '汽笛';
         }
-        html += '</tbody></table></div>';
+        html += '</tbody>赶趟</div>';
     }
     return html || '<p>Aucun congé ou absence trouvé</p>';
 }
 
 function filterLeavesList() {
-    var filterAgent = document.getElementById('leavesFilter').value;
-    var filterType = document.getElementById('leavesTypeFilter').value;
-    var leavesByAgent = {};
-    for (var monthKey in planningData) {
-        for (var agentCode in planningData[monthKey]) {
-            for (var dateStr in planningData[monthKey][agentCode]) {
-                var record = planningData[monthKey][agentCode][dateStr];
+    const filterAgent = document.getElementById('leavesFilter').value;
+    const filterType = document.getElementById('leavesTypeFilter').value;
+    const leavesByAgent = {};
+    for (const monthKey in planningData) {
+        for (const agentCode in planningData[monthKey]) {
+            for (const dateStr in planningData[monthKey][agentCode]) {
+                const record = planningData[monthKey][agentCode][dateStr];
                 if (record && (record.shift === 'C' || record.shift === 'M' || record.shift === 'A')) {
                     if (!leavesByAgent[agentCode]) leavesByAgent[agentCode] = [];
                     leavesByAgent[agentCode].push({ date: dateStr, type: record.shift, comment: record.comment || '', recorded_at: record.recorded_at });
@@ -1360,19 +1376,19 @@ function filterLeavesList() {
         }
     }
     if (leaves) {
-        for (var i = 0; i < leaves.length; i++) {
-            var leave = leaves[i];
+        for (let i = 0; i < leaves.length; i++) {
+            const leave = leaves[i];
             if (!leavesByAgent[leave.agent_code]) leavesByAgent[leave.agent_code] = [];
             leavesByAgent[leave.agent_code].push({ date: leave.start_date + " au " + leave.end_date, type: 'Période', comment: leave.comment || '', recorded_at: leave.created_at, is_period: true });
         }
     }
-    var container = document.getElementById('leavesListContainer');
+    const container = document.getElementById('leavesListContainer');
     if (container) container.innerHTML = generateLeavesList(leavesByAgent, filterAgent, filterType);
 }
 
 function deleteSingleLeave(agentCode, dateStr) {
     if (!confirm("Supprimer l'absence de " + agentCode + " du " + dateStr + " ?")) return;
-    var monthKey = dateStr.substring(0,7);
+    const monthKey = dateStr.substring(0,7);
     if (planningData[monthKey] && planningData[monthKey][agentCode] && planningData[monthKey][agentCode][dateStr]) {
         delete planningData[monthKey][agentCode][dateStr];
         saveData();
@@ -1384,14 +1400,14 @@ function deleteSingleLeave(agentCode, dateStr) {
 function deletePeriodLeave(agentCode, startDate) {
     if (!confirm("Supprimer le congé sur période de " + agentCode + " commençant le " + startDate + " ?")) return;
     if (leaves) {
-        var leaveIndex = leaves.findIndex(function(l) { return l.agent_code === agentCode && l.start_date === startDate; });
+        const leaveIndex = leaves.findIndex(function(l) { return l.agent_code === agentCode && l.start_date === startDate; });
         if (leaveIndex !== -1) {
-            var leave = leaves[leaveIndex];
-            var start = new Date(leave.start_date), end = new Date(leave.end_date);
-            var current = new Date(start);
+            const leave = leaves[leaveIndex];
+            const start = new Date(leave.start_date), end = new Date(leave.end_date);
+            let current = new Date(start);
             while (current <= end) {
-                var dateStr = current.toISOString().split('T')[0];
-                var monthKey = dateStr.substring(0,7);
+                const dateStr = current.toISOString().split('T')[0];
+                const monthKey = dateStr.substring(0,7);
                 if (planningData[monthKey] && planningData[monthKey][agentCode] && planningData[monthKey][agentCode][dateStr]) {
                     delete planningData[monthKey][agentCode][dateStr];
                 }
@@ -1406,46 +1422,46 @@ function deletePeriodLeave(agentCode, startDate) {
 }
 
 function showAgentLeavesSelection() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + ' (' + a.code + ')</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="leavesAgentSelect">' + agentOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="leavesAgentSelect">' + agentOptions + '</select></div>' +
         '<div class="form-group"><label>Période</label><select id="leavesPeriod"><option value="month">Ce mois</option><option value="last_month">Mois dernier</option><option value="quarter">Ce trimestre</option><option value="year">Cette année</option><option value="all">Toute période</option></select></div></div>';
     openPopup("Congés par Agent", html, '<button class="popup-button green" onclick="showSelectedAgentLeaves()">Voir</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function showSelectedAgentLeaves() {
-    var agentCode = document.getElementById('leavesAgentSelect').value;
-    var period = document.getElementById('leavesPeriod').value;
-    var today = new Date();
-    var startDate, endDate;
+    const agentCode = document.getElementById('leavesAgentSelect').value;
+    const period = document.getElementById('leavesPeriod').value;
+    const today = new Date();
+    let startDate, endDate;
     switch(period) {
         case 'month': startDate = new Date(today.getFullYear(), today.getMonth(), 1); endDate = new Date(today.getFullYear(), today.getMonth()+1, 0); break;
         case 'last_month': startDate = new Date(today.getFullYear(), today.getMonth()-1, 1); endDate = new Date(today.getFullYear(), today.getMonth(), 0); break;
-        case 'quarter': var q = Math.floor(today.getMonth()/3); startDate = new Date(today.getFullYear(), q*3, 1); endDate = new Date(today.getFullYear(), (q+1)*3, 0); break;
+        case 'quarter': const q = Math.floor(today.getMonth()/3); startDate = new Date(today.getFullYear(), q*3, 1); endDate = new Date(today.getFullYear(), (q+1)*3, 0); break;
         case 'year': startDate = new Date(today.getFullYear(), 0, 1); endDate = new Date(today.getFullYear(), 11, 31); break;
         default: startDate = new Date(2020,0,1); endDate = new Date(2030,11,31);
     }
-    var agentLeaves = [];
-    for (var monthKey in planningData) {
+    const agentLeaves = [];
+    for (const monthKey in planningData) {
         if (planningData[monthKey][agentCode]) {
-            for (var dateStr in planningData[monthKey][agentCode]) {
-                var record = planningData[monthKey][agentCode][dateStr];
+            for (const dateStr in planningData[monthKey][agentCode]) {
+                const record = planningData[monthKey][agentCode][dateStr];
                 if (record && (record.shift === 'C' || record.shift === 'M' || record.shift === 'A')) {
-                    var date = new Date(dateStr);
+                    const date = new Date(dateStr);
                     if (date >= startDate && date <= endDate) agentLeaves.push({ date: dateStr, type: record.shift, comment: record.comment || '', recorded_at: record.recorded_at });
                 }
             }
         }
     }
     if (leaves) {
-        for (var i = 0; i < leaves.length; i++) {
-            var leave = leaves[i];
+        for (let i = 0; i < leaves.length; i++) {
+            const leave = leaves[i];
             if (leave.agent_code === agentCode) {
-                var leaveStart = new Date(leave.start_date), leaveEnd = new Date(leave.end_date);
+                const leaveStart = new Date(leave.start_date), leaveEnd = new Date(leave.end_date);
                 if ((leaveStart >= startDate && leaveStart <= endDate) || (leaveEnd >= startDate && leaveEnd <= endDate) || (leaveStart <= startDate && leaveEnd >= endDate)) {
                     agentLeaves.push({ date: leave.start_date + " au " + leave.end_date, type: 'Période', comment: leave.comment || '', recorded_at: leave.created_at, is_period: true });
                 }
@@ -1453,61 +1469,61 @@ function showSelectedAgentLeaves() {
         }
     }
     if (!agentLeaves.length) { showSnackbar("Aucun congé trouvé pour cet agent sur la période"); return; }
-    var agent = agents.find(function(a) { return a.code === agentCode; });
-    var periodText = period === 'all' ? 'Toute période' : startDate.toLocaleDateString() + ' au ' + endDate.toLocaleDateString();
-    var html = '<div class="info-section"><h3>Congés de ' + agent.nom + ' ' + agent.prenom + '</h3><p>Période: ' + periodText + '</p><table class="classement-table"><thead><th>Date(s)</th><th>Type</th><th>Commentaire</th><th>Enregistré le</th></thead><tbody>';
-    for (var i = 0; i < agentLeaves.length; i++) {
-        var l = agentLeaves[i];
-        html += '<tr><td>' + l.date + '</td><td><span style="background:' + (SHIFT_COLORS[l.type] || '#7f8c8d') + ';color:white;padding:2px 8px;border-radius:3px">' + l.type + '</span></td><td>' + (l.comment || '-') + '</td><td>' + new Date(l.recorded_at).toLocaleDateString() + '</td></tr>';
+    const agent = agents.find(function(a) { return a.code === agentCode; });
+    const periodText = period === 'all' ? 'Toute période' : startDate.toLocaleDateString() + ' au ' + endDate.toLocaleDateString();
+    let html = '<div class="info-section"><h3>Congés de ' + agent.nom + ' ' + agent.prenom + '</h3><p>Période: ' + periodText + '</p><table class="classement-table"><thead><th>Date(s)</th><th>Type</th><th>Commentaire</th><th>Enregistré le</th></thead><tbody>';
+    for (let i = 0; i < agentLeaves.length; i++) {
+        const l = agentLeaves[i];
+        html += '汽笛>' + l.date + '汽笛><span style="background:' + (SHIFT_COLORS[l.type] || '#7f8c8d') + ';color:white;padding:2px 8px;border-radius:3px">' + l.type + '</span>汽笛>' + (l.comment || '-') + '汽笛>' + new Date(l.recorded_at).toLocaleDateString() + '汽笛';
     }
-    html += '</tbody></table></div>';
+    html += '</tbody>赶趟</div>';
     openPopup("Congés de " + agent.code, html, '<button class="popup-button blue" onclick="showAgentLeavesSelection()">Autre Agent</button><button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function showGroupLeavesSelection() {
-    var groups = ['A','B','C','D','E'];
-    var groupOptions = '';
-    for (var i = 0; i < groups.length; i++) {
+    const groups = ['A','B','C','D','E'];
+    let groupOptions = '';
+    for (let i = 0; i < groups.length; i++) {
         groupOptions += '<option value="' + groups[i] + '">Groupe ' + groups[i] + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Groupe</label><select id="groupLeavesSelect">' + groupOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Groupe</label><select id="groupLeavesSelect">' + groupOptions + '</select></div>' +
         '<div class="form-group"><label>Période</label><select id="groupLeavesPeriod"><option value="month">Ce mois</option><option value="last_month">Mois dernier</option><option value="quarter">Ce trimestre</option><option value="year">Cette année</option><option value="all">Toute période</option></select></div>' +
         '<div id="groupLeavesResult"></div></div>';
     openPopup("Congés par Groupe", html, '<button class="popup-button green" onclick="showGroupLeavesResult()">Voir</button><button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function showGroupLeavesResult() {
-    var group = document.getElementById('groupLeavesSelect').value;
-    var period = document.getElementById('groupLeavesPeriod').value;
-    var today = new Date();
-    var startDate, endDate;
+    const group = document.getElementById('groupLeavesSelect').value;
+    const period = document.getElementById('groupLeavesPeriod').value;
+    const today = new Date();
+    let startDate, endDate;
     switch(period) {
         case 'month': startDate = new Date(today.getFullYear(), today.getMonth(), 1); endDate = new Date(today.getFullYear(), today.getMonth()+1, 0); break;
         case 'last_month': startDate = new Date(today.getFullYear(), today.getMonth()-1, 1); endDate = new Date(today.getFullYear(), today.getMonth(), 0); break;
-        case 'quarter': var q = Math.floor(today.getMonth()/3); startDate = new Date(today.getFullYear(), q*3, 1); endDate = new Date(today.getFullYear(), (q+1)*3, 0); break;
+        case 'quarter': const q = Math.floor(today.getMonth()/3); startDate = new Date(today.getFullYear(), q*3, 1); endDate = new Date(today.getFullYear(), (q+1)*3, 0); break;
         case 'year': startDate = new Date(today.getFullYear(), 0, 1); endDate = new Date(today.getFullYear(), 11, 31); break;
         default: startDate = new Date(2020,0,1); endDate = new Date(2030,11,31);
     }
-    var groupAgents = agents.filter(function(a) { return a.groupe === group && a.statut === 'actif'; });
-    var leavesList = [];
-    for (var i = 0; i < groupAgents.length; i++) {
-        var agent = groupAgents[i];
-        for (var monthKey in planningData) {
+    const groupAgents = agents.filter(function(a) { return a.groupe === group && a.statut === 'actif'; });
+    const leavesList = [];
+    for (let i = 0; i < groupAgents.length; i++) {
+        const agent = groupAgents[i];
+        for (const monthKey in planningData) {
             if (planningData[monthKey][agent.code]) {
-                for (var dateStr in planningData[monthKey][agent.code]) {
-                    var record = planningData[monthKey][agent.code][dateStr];
+                for (const dateStr in planningData[monthKey][agent.code]) {
+                    const record = planningData[monthKey][agent.code][dateStr];
                     if (record && (record.shift === 'C' || record.shift === 'M' || record.shift === 'A')) {
-                        var date = new Date(dateStr);
+                        const date = new Date(dateStr);
                         if (date >= startDate && date <= endDate) leavesList.push({ agent: agent.nom + ' ' + agent.prenom, date: dateStr, type: record.shift, comment: record.comment || '' });
                     }
                 }
             }
         }
         if (leaves) {
-            for (var j = 0; j < leaves.length; j++) {
-                var leave = leaves[j];
+            for (let j = 0; j < leaves.length; j++) {
+                const leave = leaves[j];
                 if (leave.agent_code === agent.code) {
-                    var leaveStart = new Date(leave.start_date), leaveEnd = new Date(leave.end_date);
+                    const leaveStart = new Date(leave.start_date), leaveEnd = new Date(leave.end_date);
                     if ((leaveStart >= startDate && leaveStart <= endDate) || (leaveEnd >= startDate && leaveEnd <= endDate) || (leaveStart <= startDate && leaveEnd >= endDate)) {
                         leavesList.push({ agent: agent.nom + ' ' + agent.prenom, date: leave.start_date + " au " + leave.end_date, type: 'Période', comment: leave.comment || '' });
                     }
@@ -1515,30 +1531,30 @@ function showGroupLeavesResult() {
             }
         }
     }
-    var html = '<div class="info-section"><h3>Congés Groupe ' + group + '</h3>';
+    let html = '<div class="info-section"><h3>Congés Groupe ' + group + '</h3>';
     if (!leavesList.length) html += '<p>Aucun congé trouvé</p>';
     else {
         html += '<table class="classement-table"><thead><th>Agent</th><th>Date(s)</th><th>Type</th><th>Commentaire</th></thead><tbody>';
-        for (var i = 0; i < leavesList.length; i++) {
-            var l = leavesList[i];
-            html += '<tr><td>' + l.agent + '</td><td>' + l.date + '</td><td>' + (SHIFT_LABELS[l.type] || l.type) + '</td><td>' + (l.comment || '-') + '</td></tr>';
+        for (let i = 0; i < leavesList.length; i++) {
+            const l = leavesList[i];
+            html += '汽笛>' + l.agent + '汽笛>' + l.date + '汽笛>' + (SHIFT_LABELS[l.type] || l.type) + '汽笛>' + (l.comment || '-') + '汽笛';
         }
-        html += '</tbody></table>';
+        html += '</tbody>赶趟';
     }
     html += '</div>';
     document.getElementById('groupLeavesResult').innerHTML = html;
 }
 
 function exportLeavesReport() {
-    var csv = "Rapport des Congés et Absences\n\nDate Export;Nombre total d'absences\n" + new Date().toLocaleDateString() + ";" + countTotalLeaves() + "\n\nAgent;Code;Groupe;Date;Type;Commentaire;Enregistré le\n";
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    for (var i = 0; i < activeAgents.length; i++) {
-        var agent = activeAgents[i];
-        var agentLeaves = [];
-        for (var monthKey in planningData) {
+    let csv = "Rapport des Congés et Absences\n\nDate Export;Nombre total d'absences\n" + new Date().toLocaleDateString() + ";" + countTotalLeaves() + "\n\nAgent;Code;Groupe;Date;Type;Commentaire;Enregistré le\n";
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    for (let i = 0; i < activeAgents.length; i++) {
+        const agent = activeAgents[i];
+        const agentLeaves = [];
+        for (const monthKey in planningData) {
             if (planningData[monthKey][agent.code]) {
-                for (var dateStr in planningData[monthKey][agent.code]) {
-                    var record = planningData[monthKey][agent.code][dateStr];
+                for (const dateStr in planningData[monthKey][agent.code]) {
+                    const record = planningData[monthKey][agent.code][dateStr];
                     if (record && (record.shift === 'C' || record.shift === 'M' || record.shift === 'A')) {
                         agentLeaves.push({ date: dateStr, type: record.shift, comment: record.comment || '', recorded_at: record.recorded_at });
                     }
@@ -1546,15 +1562,15 @@ function exportLeavesReport() {
             }
         }
         if (leaves) {
-            for (var j = 0; j < leaves.length; j++) {
-                var leave = leaves[j];
+            for (let j = 0; j < leaves.length; j++) {
+                const leave = leaves[j];
                 if (leave.agent_code === agent.code) {
                     agentLeaves.push({ date: leave.start_date + " au " + leave.end_date, type: 'Période', comment: leave.comment || '', recorded_at: leave.created_at });
                 }
             }
         }
-        for (var k = 0; k < agentLeaves.length; k++) {
-            var l = agentLeaves[k];
+        for (let k = 0; k < agentLeaves.length; k++) {
+            const l = agentLeaves[k];
             csv += agent.nom + " " + agent.prenom + ";" + agent.code + ";" + agent.groupe + ";" + l.date + ";" + l.type + ";\"" + (l.comment || "") + "\";" + new Date(l.recorded_at).toLocaleDateString() + "\n";
         }
     }
@@ -1563,11 +1579,11 @@ function exportLeavesReport() {
 }
 
 function countTotalLeaves() {
-    var count = 0;
-    for (var monthKey in planningData) {
-        for (var agentCode in planningData[monthKey]) {
-            for (var dateStr in planningData[monthKey][agentCode]) {
-                var record = planningData[monthKey][agentCode][dateStr];
+    let count = 0;
+    for (const monthKey in planningData) {
+        for (const agentCode in planningData[monthKey]) {
+            for (const dateStr in planningData[monthKey][agentCode]) {
+                const record = planningData[monthKey][agentCode][dateStr];
                 if (record && (record.shift === 'C' || record.shift === 'M' || record.shift === 'A')) count++;
             }
         }
@@ -1577,14 +1593,14 @@ function countTotalLeaves() {
 }
 
 function showAddLeaveForDate(agentCode, dateStr) {
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><input type="text" value="' + agentCode + '" readonly></div><div class="form-group"><label>Date</label><input type="text" value="' + dateStr + '" readonly></div><div class="form-group"><label>Type</label><select id="quickLeaveType"><option value="C">Congé payé</option><option value="M">Maladie</option><option value="A">Autre absence</option></select></div><div class="form-group"><label>Commentaire</label><textarea id="quickLeaveComment" rows="2"></textarea></div></div>';
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><input type="text" value="' + agentCode + '" readonly></div><div class="form-group"><label>Date</label><input type="text" value="' + dateStr + '" readonly></div><div class="form-group"><label>Type</label><select id="quickLeaveType"><option value="C">Congé payé</option><option value="M">Maladie</option><option value="A">Autre absence</option></select></div><div class="form-group"><label>Commentaire</label><textarea id="quickLeaveComment" rows="2"></textarea></div></div>';
     openPopup("Ajouter Congé", html, '<button class="popup-button green" onclick="saveQuickLeave(\'' + agentCode + '\',\'' + dateStr + '\')">Enregistrer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function saveQuickLeave(agentCode, dateStr) {
-    var type = document.getElementById('quickLeaveType').value;
-    var comment = document.getElementById('quickLeaveComment').value;
-    var monthKey = dateStr.substring(0,7);
+    const type = document.getElementById('quickLeaveType').value;
+    const comment = document.getElementById('quickLeaveComment').value;
+    const monthKey = dateStr.substring(0,7);
     if (!planningData[monthKey]) planningData[monthKey] = {};
     if (!planningData[monthKey][agentCode]) planningData[monthKey][agentCode] = {};
     planningData[monthKey][agentCode][dateStr] = { shift: type, type: 'absence', comment: comment, recorded_at: new Date().toISOString() };
@@ -1595,11 +1611,11 @@ function saveQuickLeave(agentCode, dateStr) {
 }
 
 function showDeleteLeaveForm() {
-    var allLeaves = [];
-    for (var mk in planningData) {
-        for (var ac in planningData[mk]) {
-            for (var d in planningData[mk][ac]) {
-                var record = planningData[mk][ac][d];
+    const allLeaves = [];
+    for (const mk in planningData) {
+        for (const ac in planningData[mk]) {
+            for (const d in planningData[mk][ac]) {
+                const record = planningData[mk][ac][d];
                 if (record && (record.shift === 'C' || record.shift === 'M' || record.shift === 'A')) {
                     allLeaves.push({ agent: ac, date: d, type: record.shift, comment: record.comment || '', period_id: record.period_id });
                 }
@@ -1607,27 +1623,27 @@ function showDeleteLeaveForm() {
         }
     }
     if (!allLeaves.length) { showSnackbar("Aucun congé à supprimer"); return; }
-    var agentOptions = '<option value="all">Tous les agents</option>';
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    let agentOptions = '<option value="all">Tous les agents</option>';
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Filtrer par agent</label><select id="deleteFilterAgent" onchange="filterDeleteLeaves()">' + agentOptions + '</select></div><div id="deleteLeavesList">' + generateDeleteLeavesList(allLeaves) + '</div></div>';
+    const html = '<div class="info-section"><div class="form-group"><label>Filtrer par agent</label><select id="deleteFilterAgent" onchange="filterDeleteLeaves()">' + agentOptions + '</select></div><div id="deleteLeavesList">' + generateDeleteLeavesList(allLeaves) + '</div></div>';
     openPopup("Supprimer un Congé", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
     window.filterDeleteLeaves = function() {
-        var filterAgent = document.getElementById('deleteFilterAgent').value;
-        var filtered = filterAgent === 'all' ? allLeaves : allLeaves.filter(function(l) { return l.agent === filterAgent; });
+        const filterAgent = document.getElementById('deleteFilterAgent').value;
+        const filtered = filterAgent === 'all' ? allLeaves : allLeaves.filter(function(l) { return l.agent === filterAgent; });
         document.getElementById('deleteLeavesList').innerHTML = generateDeleteLeavesList(filtered);
     };
 }
 
 function generateDeleteLeavesList(leavesList) {
     if (!leavesList.length) return '<p>Aucun congé trouvé</p>';
-    var html = '<table class="classement-table"><thead><th>Agent</th><th>Date</th><th>Type</th><th>Commentaire</th><th>Action</th></thead><tbody>';
-    for (var i = 0; i < leavesList.length; i++) {
-        var l = leavesList[i];
-        html += '汽笛<td><strong>' + l.agent + '</strong>汽笛>' + l.date + '汽笛>' + SHIFT_LABELS[l.type] + '汽笛>' + (l.comment || '-') + '汽笛><button class="action-btn small red" onclick="deleteLeaveItem(\'' + l.agent + '\',\'' + l.date + '\')">🗑️</button>汽笛</tr>';
+    let html = '<table class="classement-table"><thead><th>Agent</th><th>Date</th><th>Type</th><th>Commentaire</th><th>Action</th></thead><tbody>';
+    for (let i = 0; i < leavesList.length; i++) {
+        const l = leavesList[i];
+        html += '汽笛>' + l.agent + '汽笛>' + l.date + '汽笛>' + SHIFT_LABELS[l.type] + '汽笛>' + (l.comment || '-') + '汽笛><button class="action-btn small red" onclick="deleteLeaveItem(\'' + l.agent + '\',\'' + l.date + '\')">🗑️</button>汽笛';
     }
     html += '</tbody>赶趟';
     return html;
@@ -1635,7 +1651,7 @@ function generateDeleteLeavesList(leavesList) {
 
 function deleteLeaveItem(agentCode, dateStr) {
     if (confirm("Supprimer le congé de " + agentCode + " du " + dateStr + " ?")) {
-        var monthKey = dateStr.substring(0,7);
+        const monthKey = dateStr.substring(0,7);
         if (planningData[monthKey] && planningData[monthKey][agentCode] && planningData[monthKey][agentCode][dateStr]) {
             delete planningData[monthKey][agentCode][dateStr];
             saveData();
@@ -1649,10 +1665,10 @@ function previewLeave() { showSnackbar("Prévisualisation non disponible"); }
 
 function showAddPeriodLeaveForm() {
     showAddLeaveForm();
-    var leaveType = document.getElementById('leaveType');
+    const leaveType = document.getElementById('leaveType');
     if (leaveType) leaveType.value = 'periode';
-    var singleDiv = document.getElementById('singleLeaveSection');
-    var periodDiv = document.getElementById('periodLeaveSection');
+    const singleDiv = document.getElementById('singleLeaveSection');
+    const periodDiv = document.getElementById('periodLeaveSection');
     if (singleDiv) singleDiv.style.display = 'none';
     if (periodDiv) periodDiv.style.display = 'block';
 }
@@ -1668,21 +1684,21 @@ function displayPanicMenu() {
 }
 
 function showAddPanicCodeForm() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="panicAgent">' + agentOptions + '</select></div><div class="form-group"><label>Code</label><input type="text" id="panicCode" placeholder="Ex: 1234"></div></div>';
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="panicAgent">' + agentOptions + '</select></div><div class="form-group"><label>Code</label><input type="text" id="panicCode" placeholder="Ex: 1234"></div></div>';
     openPopup("Ajouter Code Panique", html, '<button class="popup-button green" onclick="addPanicCode()">Enregistrer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function addPanicCode() {
-    var agentCode = document.getElementById('panicAgent').value;
-    var code = document.getElementById('panicCode').value;
+    const agentCode = document.getElementById('panicAgent').value;
+    const code = document.getElementById('panicCode').value;
     if (!code) { showSnackbar("Code requis"); return; }
-    var existing = panicCodes.findIndex(function(p) { return p.agent_code === agentCode; });
+    const existing = panicCodes.findIndex(function(p) { return p.agent_code === agentCode; });
     if (existing !== -1) panicCodes[existing] = { agent_code: agentCode, code: code, created_at: new Date().toISOString() };
     else panicCodes.push({ agent_code: agentCode, code: code, created_at: new Date().toISOString() });
     saveData();
@@ -1692,10 +1708,10 @@ function addPanicCode() {
 
 function showPanicCodesList() {
     if (!panicCodes.length) { showSnackbar("Aucun code panique"); return; }
-    var html = '<div class="info-section"><table class="classement-table"><thead><th>Agent</th><th>Code</th><th>Créé le</th></thead><tbody>';
-    for (var i = 0; i < panicCodes.length; i++) {
-        var p = panicCodes[i];
-        html += '汽笛<td><strong>' + p.agent_code + '</strong>汽笛>' + p.code + '汽笛>' + new Date(p.created_at).toLocaleDateString() + '汽笛</tr>';
+    let html = '<div class="info-section"><table class="classement-table"><thead><th>Agent</th><th>Code</th><th>Créé le</th></thead><tbody>';
+    for (let i = 0; i < panicCodes.length; i++) {
+        const p = panicCodes[i];
+        html += '汽笛>' + p.agent_code + '汽笛>' + p.code + '汽笛>' + new Date(p.created_at).toLocaleDateString() + '汽笛';
     }
     html += '</tbody>赶趟</div>';
     openPopup("Codes Panique", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
@@ -1703,9 +1719,9 @@ function showPanicCodesList() {
 
 function exportPanicCodes() {
     if (!panicCodes.length) { showSnackbar("Aucun code"); return; }
-    var csv = "Agent;Code;Date\n";
-    for (var i = 0; i < panicCodes.length; i++) {
-        var p = panicCodes[i];
+    let csv = "Agent;Code;Date\n";
+    for (let i = 0; i < panicCodes.length; i++) {
+        const p = panicCodes[i];
         csv += p.agent_code + ";" + p.code + ";" + p.created_at + "\n";
     }
     downloadCSV(csv, "codes_panique.csv");
@@ -1725,12 +1741,12 @@ function displayRadiosMenu() {
 }
 
 function showAddRadioForm() {
-    var html = '<div class="info-section"><div class="form-group"><label>ID Radio</label><input type="text" id="radioId" placeholder="RAD001"></div><div class="form-group"><label>Modèle</label><input type="text" id="radioModel" placeholder="Motorola"></div><div class="form-group"><label>Statut</label><select id="radioStatus"><option>DISPONIBLE</option><option>ATTRIBUEE</option><option>HS</option></select></div></div>';
+    const html = '<div class="info-section"><div class="form-group"><label>ID Radio</label><input type="text" id="radioId" placeholder="RAD001"></div><div class="form-group"><label>Modèle</label><input type="text" id="radioModel" placeholder="Motorola"></div><div class="form-group"><label>Statut</label><select id="radioStatus"><option>DISPONIBLE</option><option>ATTRIBUEE</option><option>HS</option></select></div></div>';
     openPopup("Ajouter Radio", html, '<button class="popup-button green" onclick="addRadio()">Enregistrer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function addRadio() {
-    var id = document.getElementById('radioId').value.toUpperCase();
+    const id = document.getElementById('radioId').value.toUpperCase();
     if (radios.find(function(r) { return r.id === id; })) { showSnackbar("ID déjà existant"); return; }
     radios.push({ id: id, model: document.getElementById('radioModel').value, status: document.getElementById('radioStatus').value, created_at: new Date().toISOString() });
     saveData();
@@ -1740,29 +1756,29 @@ function addRadio() {
 
 function showRadiosList() {
     if (!radios.length) { showSnackbar("Aucune radio"); return; }
-    var html = '<div class="info-section"><table class="classement-table"><thead><th>ID</th><th>Modèle</th><th>Statut</th><th>Attribuée à</th><th>Actions</th></thead><tbody>';
-    for (var i = 0; i < radios.length; i++) {
-        var r = radios[i];
-        var agentName = r.attributed_to ? (agents.find(function(a) { return a.code === r.attributed_to; })?.nom || r.attributed_to) : '-';
-        html += '汽笛<td><strong>' + r.id + '</strong>汽笛>' + r.model + '汽笛><span class="status-badge ' + (r.status==='DISPONIBLE'?'active':'inactive') + '">' + r.status + '</span>汽笛>' + agentName + '汽笛><button class="action-btn small blue" onclick="showAssignRadioForm(\'' + r.id + '\')">📲</button><button class="action-btn small red" onclick="deleteRadio(\'' + r.id + '\')">🗑️</button>汽笛</tr>';
+    let html = '<div class="info-section"><table class="classement-table"><thead><th>ID</th><th>Modèle</th><th>Statut</th><th>Attribuée à</th><th>Actions</th></thead><tbody>';
+    for (let i = 0; i < radios.length; i++) {
+        const r = radios[i];
+        const agentName = r.attributed_to ? (agents.find(function(a) { return a.code === r.attributed_to; })?.nom || r.attributed_to) : '-';
+        html += '汽笛>' + r.id + '汽笛>' + r.model + '汽笛><span class="status-badge ' + (r.status==='DISPONIBLE'?'active':'inactive') + '">' + r.status + '</span>汽笛>' + agentName + '汽笛><button class="action-btn small blue" onclick="showAssignRadioForm(\'' + r.id + '\')">📲</button><button class="action-btn small red" onclick="deleteRadio(\'' + r.id + '\')">🗑️</button>汽笛';
     }
     html += '</tbody>赶趟</div>';
     openPopup("Liste Radios", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function showAssignRadioForm(radioId) {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><p>Radio: ' + radioId + '</p><div class="form-group"><label>Agent</label><select id="assignAgent">' + agentOptions + '</select></div></div>';
+    const html = '<div class="info-section"><p>Radio: ' + radioId + '</p><div class="form-group"><label>Agent</label><select id="assignAgent">' + agentOptions + '</select></div></div>';
     openPopup("Attribuer Radio", html, '<button class="popup-button green" onclick="assignRadio(\'' + radioId + '\')">Attribuer</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function assignRadio(radioId) {
-    var idx = radios.findIndex(function(r) { return r.id === radioId; });
+    const idx = radios.findIndex(function(r) { return r.id === radioId; });
     if (idx !== -1) {
         radios[idx].status = 'ATTRIBUEE';
         radios[idx].attributed_to = document.getElementById('assignAgent').value;
@@ -1774,20 +1790,20 @@ function assignRadio(radioId) {
 }
 
 function showReturnRadioForm() {
-    var attributed = radios.filter(function(r) { return r.status === 'ATTRIBUEE'; });
+    const attributed = radios.filter(function(r) { return r.status === 'ATTRIBUEE'; });
     if (!attributed.length) { showSnackbar("Aucune radio attribuée"); return; }
-    var options = '';
-    for (var i = 0; i < attributed.length; i++) {
-        var r = attributed[i];
+    let options = '';
+    for (let i = 0; i < attributed.length; i++) {
+        const r = attributed[i];
         options += '<option value="' + r.id + '">' + r.id + ' - ' + r.attributed_to + '</option>';
     }
-    var html = '<div class="info-section"><select id="returnRadio">' + options + '</select></div>';
+    const html = '<div class="info-section"><select id="returnRadio">' + options + '</select></div>';
     openPopup("Retour Radio", html, '<button class="popup-button green" onclick="returnRadio()">Retourner</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
 function returnRadio() {
-    var radioId = document.getElementById('returnRadio').value;
-    var idx = radios.findIndex(function(r) { return r.id === radioId; });
+    const radioId = document.getElementById('returnRadio').value;
+    const idx = radios.findIndex(function(r) { return r.id === radioId; });
     if (idx !== -1) {
         radios[idx].status = 'DISPONIBLE';
         delete radios[idx].attributed_to;
@@ -1798,16 +1814,17 @@ function returnRadio() {
 }
 
 function showRadiosStatus() {
-    var total = radios.length, dispo = radios.filter(function(r) { return r.status==='DISPONIBLE'; }).length;
-    var attrib = radios.filter(function(r) { return r.status==='ATTRIBUEE'; }).length;
-    var hs = radios.filter(function(r) { return r.status==='HS'; }).length;
-    var html = '<div class="info-section"><h3>Statut Radios</h3><p>Total: ' + total + '</p><p>Disponibles: ' + dispo + '</p><p>Attribuées: ' + attrib + '</p><p>HS: ' + hs + '</p></div>';
+    const total = radios.length;
+    const dispo = radios.filter(function(r) { return r.status==='DISPONIBLE'; }).length;
+    const attrib = radios.filter(function(r) { return r.status==='ATTRIBUEE'; }).length;
+    const hs = radios.filter(function(r) { return r.status==='HS'; }).length;
+    const html = '<div class="info-section"><h3>Statut Radios</h3><p>Total: ' + total + '</p><p>Disponibles: ' + dispo + '</p><p>Attribuées: ' + attrib + '</p><p>HS: ' + hs + '</p></div>';
     openPopup("Statut Radios", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function deleteRadio(radioId) {
     if (confirm("Supprimer cette radio ?")) {
-        var idx = radios.findIndex(function(r) { return r.id === radioId; });
+        const idx = radios.findIndex(function(r) { return r.id === radioId; });
         if (idx !== -1) radios.splice(idx, 1);
         saveData();
         showSnackbar("Radio supprimée");
@@ -1829,13 +1846,13 @@ function displayUniformMenu() {
 }
 
 function showAddUniformForm() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + ' (' + a.code + ')</option>';
     }
-    var html = '<div class="info-section"><h3>Enregistrement Habillement</h3><div class="form-group"><label>Agent *</label><select id="uniformAgent">' + agentOptions + '</select></div>' +
+    const html = '<div class="info-section"><h3>Enregistrement Habillement</h3><div class="form-group"><label>Agent *</label><select id="uniformAgent">' + agentOptions + '</select></div>' +
         '<div class="form-group"><label>Chemise taille *</label><select id="uniformShirt"><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>' +
         '<div class="form-group"><label>Pantalon taille *</label><select id="uniformPants"><option>38</option><option>40</option><option>42</option><option>44</option><option>46</option><option>48</option><option>50</option></select></div>' +
         '<div class="form-group"><label>Veste/Blouson</label><select id="uniformJacket"><option>Non fourni</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>' +
@@ -1850,9 +1867,9 @@ function showAddUniformForm() {
 }
 
 function addUniform() {
-    var agentCode = document.getElementById('uniformAgent').value;
-    var idx = uniforms.findIndex(function(u) { return u.agent_code === agentCode; });
-    var uniform = {
+    const agentCode = document.getElementById('uniformAgent').value;
+    const idx = uniforms.findIndex(function(u) { return u.agent_code === agentCode; });
+    const uniform = {
         agent_code: agentCode,
         shirt: document.getElementById('uniformShirt').value,
         pants: document.getElementById('uniformPants').value,
@@ -1876,11 +1893,11 @@ function addUniform() {
 
 function showEditUniformList() {
     if (!uniforms.length) { showSnackbar("Aucun habillement"); return; }
-    var html = '<div class="info-section"><input type="text" id="searchUniform" placeholder="Rechercher agent..." class="form-input" onkeyup="filterUniformList()"><div id="uniformEditList">' + generateUniformEditList() + '</div></div>';
+    const html = '<div class="info-section"><input type="text" id="searchUniform" placeholder="Rechercher agent..." class="form-input" onkeyup="filterUniformList()"><div id="uniformEditList">' + generateUniformEditList() + '</div></div>';
     openPopup("Modifier Habillement", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
     window.filterUniformList = function() {
-        var search = document.getElementById('searchUniform').value.toLowerCase();
-        var filtered = uniforms.filter(function(u) { return u.agent_code.toLowerCase().includes(search); });
+        const search = document.getElementById('searchUniform').value.toLowerCase();
+        const filtered = uniforms.filter(function(u) { return u.agent_code.toLowerCase().includes(search); });
         document.getElementById('uniformEditList').innerHTML = generateUniformEditList(filtered);
     };
 }
@@ -1888,24 +1905,24 @@ function showEditUniformList() {
 function generateUniformEditList(list) {
     if (list === undefined) list = uniforms;
     if (!list.length) return '<p>Aucun habillement trouvé</p>';
-    var html = '<table class="classement-table"><thead><th>Agent</th><th>Chemise</th><th>Pantalon</th><th>Veste</th><th>Chaussures</th><th>Date</th><th>Actions</th></thead><tbody>';
-    for (var i = 0; i < list.length; i++) {
-        var u = list[i];
-        html += '汽笛<td><strong>' + u.agent_code + '</strong>汽笛>' + u.shirt + '汽笛>' + u.pants + '汽笛>' + (u.jacket || '-') + '汽笛>' + (u.shoes || '-') + '汽笛>' + u.date + '汽笛><button class="action-btn small blue" onclick="editUniform(\'' + u.agent_code + '\')">✏️</button><button class="action-btn small red" onclick="deleteUniform(\'' + u.agent_code + '\')">🗑️</button>汽笛</tr>';
+    let html = '<table class="classement-table"><thead><th>Agent</th><th>Chemise</th><th>Pantalon</th><th>Veste</th><th>Chaussures</th><th>Date</th><th>Actions</th></thead><tbody>';
+    for (let i = 0; i < list.length; i++) {
+        const u = list[i];
+        html += '汽笛>' + u.agent_code + '汽笛>' + u.shirt + '汽笛>' + u.pants + '汽笛>' + (u.jacket || '-') + '汽笛>' + (u.shoes || '-') + '汽笛>' + u.date + '汽笛><button class="action-btn small blue" onclick="editUniform(\'' + u.agent_code + '\')">✏️</button><button class="action-btn small red" onclick="deleteUniform(\'' + u.agent_code + '\')">🗑️</button>汽笛';
     }
     html += '</tbody>赶趟';
     return html;
 }
 
 function editUniform(agentCode) {
-    var uniform = uniforms.find(function(u) { return u.agent_code === agentCode; });
+    const uniform = uniforms.find(function(u) { return u.agent_code === agentCode; });
     if (!uniform) return;
-    var shirtOptions = ['S','M','L','XL','XXL'].map(function(s) { return '<option ' + (uniform.shirt === s ? 'selected' : '') + '>' + s + '</option>'; }).join('');
-    var pantsOptions = ['38','40','42','44','46','48','50'].map(function(p) { return '<option ' + (uniform.pants === p ? 'selected' : '') + '>' + p + '</option>'; }).join('');
-    var jacketOptions = ['Non fournie','S','M','L','XL','XXL'].map(function(j) { return '<option ' + ((!uniform.jacket && j === 'Non fournie') || uniform.jacket === j ? 'selected' : '') + '>' + j + '</option>'; }).join('');
-    var shirtConditionOptions = ['Neuf','Bon état','Usé','Mauvais état'].map(function(c) { return '<option ' + (uniform.shirt_condition === c ? 'selected' : '') + '>' + c + '</option>'; }).join('');
-    var pantsConditionOptions = ['Neuf','Bon état','Usé','Mauvais état'].map(function(c) { return '<option ' + (uniform.pants_condition === c ? 'selected' : '') + '>' + c + '</option>'; }).join('');
-    var html = '<div class="info-section"><h3>Modifier Habillement - ' + agentCode + '</h3><div class="form-group"><label>Chemise taille</label><select id="editShirt">' + shirtOptions + '</select></div>' +
+    const shirtOptions = ['S','M','L','XL','XXL'].map(function(s) { return '<option ' + (uniform.shirt === s ? 'selected' : '') + '>' + s + '</option>'; }).join('');
+    const pantsOptions = ['38','40','42','44','46','48','50'].map(function(p) { return '<option ' + (uniform.pants === p ? 'selected' : '') + '>' + p + '</option>'; }).join('');
+    const jacketOptions = ['Non fournie','S','M','L','XL','XXL'].map(function(j) { return '<option ' + ((!uniform.jacket && j === 'Non fournie') || uniform.jacket === j ? 'selected' : '') + '>' + j + '</option>'; }).join('');
+    const shirtConditionOptions = ['Neuf','Bon état','Usé','Mauvais état'].map(function(c) { return '<option ' + (uniform.shirt_condition === c ? 'selected' : '') + '>' + c + '</option>'; }).join('');
+    const pantsConditionOptions = ['Neuf','Bon état','Usé','Mauvais état'].map(function(c) { return '<option ' + (uniform.pants_condition === c ? 'selected' : '') + '>' + c + '</option>'; }).join('');
+    const html = '<div class="info-section"><h3>Modifier Habillement - ' + agentCode + '</h3><div class="form-group"><label>Chemise taille</label><select id="editShirt">' + shirtOptions + '</select></div>' +
         '<div class="form-group"><label>Pantalon taille</label><select id="editPants">' + pantsOptions + '</select></div>' +
         '<div class="form-group"><label>Veste</label><select id="editJacket">' + jacketOptions + '</select></div>' +
         '<div class="form-group"><label>Chaussures</label><input type="number" id="editShoes" value="' + (uniform.shoes || '') + '" step="0.5"></div>' +
@@ -1917,9 +1934,9 @@ function editUniform(agentCode) {
 }
 
 function updateUniform(agentCode) {
-    var idx = uniforms.findIndex(function(u) { return u.agent_code === agentCode; });
+    const idx = uniforms.findIndex(function(u) { return u.agent_code === agentCode; });
     if (idx !== -1) {
-        var jacketVal = document.getElementById('editJacket').value;
+        const jacketVal = document.getElementById('editJacket').value;
         uniforms[idx] = Object.assign({}, uniforms[idx], {
             shirt: document.getElementById('editShirt').value,
             pants: document.getElementById('editPants').value,
@@ -1940,7 +1957,7 @@ function updateUniform(agentCode) {
 
 function deleteUniform(agentCode) {
     if (confirm("Supprimer l'habillement de " + agentCode + " ?")) {
-        var idx = uniforms.findIndex(function(u) { return u.agent_code === agentCode; });
+        const idx = uniforms.findIndex(function(u) { return u.agent_code === agentCode; });
         if (idx !== -1) uniforms.splice(idx, 1);
         saveData();
         showSnackbar("Habillement supprimé");
@@ -1950,15 +1967,15 @@ function deleteUniform(agentCode) {
 
 function showUniformReport() {
     if (!uniforms.length) { showSnackbar("Aucun habillement"); return; }
-    var html = '<div class="info-section"><h3>Rapport Habillement</h3><table class="classement-table"><thead><th>Agent</th><th>Chemise</th><th>Pantalon</th><th>Veste</th><th>Chaussures</th><th>Date</th><th>État</th></thead><tbody>';
-    for (var i = 0; i < uniforms.length; i++) {
-        var u = uniforms[i];
-        var icons = '';
+    let html = '<div class="info-section"><h3>Rapport Habillement</h3><table class="classement-table"><thead><th>Agent</th><th>Chemise</th><th>Pantalon</th><th>Veste</th><th>Chaussures</th><th>Date</th><th>État</th></thead><tbody>';
+    for (let i = 0; i < uniforms.length; i++) {
+        const u = uniforms[i];
+        let icons = '';
         if (u.cap) icons += ' 🧢';
         if (u.belt) icons += ' 🔗';
         if (u.jacket) icons += ' 🧥';
         if (u.shoes) icons += ' 👞';
-        html += '汽笛<td><strong>' + u.agent_code + '</strong>' + icons + '汽笛>' + u.shirt + '汽笛>' + u.pants + '汽笛>' + (u.jacket || '-') + '汽笛>' + (u.shoes || '-') + '汽笛>' + u.date + '汽笛>' + (u.shirt_condition || 'Neuf') + '/' + (u.pants_condition || 'Neuf') + '汽笛</tr>';
+        html += '汽笛>' + u.agent_code + icons + '汽笛>' + u.shirt + '汽笛>' + u.pants + '汽笛>' + (u.jacket || '-') + '汽笛>' + (u.shoes || '-') + '汽笛>' + u.date + '汽笛>' + (u.shirt_condition || 'Neuf') + '/' + (u.pants_condition || 'Neuf') + '汽笛';
     }
     html += '</tbody>赶趟</div>';
     openPopup("Rapport Habillement", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
@@ -1966,38 +1983,38 @@ function showUniformReport() {
 
 function showUniformStats() {
     if (!uniforms.length) { showSnackbar("Aucune donnée"); return; }
-    var shirtSizes = {}, pantsSizes = {}, jacketSizes = {}, shoesSizes = {};
-    for (var i = 0; i < uniforms.length; i++) {
-        var u = uniforms[i];
+    const shirtSizes = {}, pantsSizes = {}, jacketSizes = {}, shoesSizes = {};
+    for (let i = 0; i < uniforms.length; i++) {
+        const u = uniforms[i];
         shirtSizes[u.shirt] = (shirtSizes[u.shirt] || 0) + 1;
         pantsSizes[u.pants] = (pantsSizes[u.pants] || 0) + 1;
         if (u.jacket) jacketSizes[u.jacket] = (jacketSizes[u.jacket] || 0) + 1;
         if (u.shoes) shoesSizes[u.shoes] = (shoesSizes[u.shoes] || 0) + 1;
     }
-    var html = '<div class="info-section"><h3>Statistiques Tailles</h3><h4>Chemises</h4>';
-    for (var s in shirtSizes) html += '<p>' + s + ': ' + shirtSizes[s] + '</p>';
+    let html = '<div class="info-section"><h3>Statistiques Tailles</h3><h4>Chemises</h4>';
+    for (const s in shirtSizes) html += '<p>' + s + ': ' + shirtSizes[s] + '</p>';
     html += '<h4>Pantalons</h4>';
-    for (var p in pantsSizes) html += '<p>' + p + ': ' + pantsSizes[p] + '</p>';
+    for (const p in pantsSizes) html += '<p>' + p + ': ' + pantsSizes[p] + '</p>';
     html += '<h4>Vestes</h4>';
-    var hasJacket = false;
-    for (var j in jacketSizes) { hasJacket = true; html += '<p>' + j + ': ' + jacketSizes[j] + '</p>'; }
+    let hasJacket = false;
+    for (const j in jacketSizes) { hasJacket = true; html += '<p>' + j + ': ' + jacketSizes[j] + '</p>'; }
     if (!hasJacket) html += '<p>Aucune veste</p>';
     html += '<h4>Chaussures</h4>';
-    var hasShoes = false;
-    for (var sh in shoesSizes) { hasShoes = true; html += '<p>Pointure ' + sh + ': ' + shoesSizes[sh] + '</p>'; }
+    let hasShoes = false;
+    for (const sh in shoesSizes) { hasShoes = true; html += '<p>Pointure ' + sh + ': ' + shoesSizes[sh] + '</p>'; }
     if (!hasShoes) html += '<p>Aucune chaussure</p>';
     html += '</div>';
     openPopup("Statistiques Tailles", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
 function showUniformDeadlines() {
-    var twoYearsAgo = new Date();
+    const twoYearsAgo = new Date();
     twoYearsAgo.setFullYear(twoYearsAgo.getFullYear() - 2);
-    var toRenew = uniforms.filter(function(u) { return new Date(u.date) < twoYearsAgo; });
-    var html = '<div class="info-section"><h3>Échéances Renouvellement (2 ans)</h3>';
+    const toRenew = uniforms.filter(function(u) { return new Date(u.date) < twoYearsAgo; });
+    let html = '<div class="info-section"><h3>Échéances Renouvellement (2 ans)</h3>';
     if (toRenew.length) {
-        for (var i = 0; i < toRenew.length; i++) {
-            var u = toRenew[i];
+        for (let i = 0; i < toRenew.length; i++) {
+            const u = toRenew[i];
             html += '<div style="padding:10px;background:#e74c3c20;margin:5px 0;border-radius:5px"><strong>' + u.agent_code + '</strong> - ' + u.shirt + '/' + u.pants + ' - ' + u.date + '<br><small>' + (u.comments || '') + '</small></div>';
         }
     } else {
@@ -2009,9 +2026,9 @@ function showUniformDeadlines() {
 
 function exportUniformReport() {
     if (!uniforms.length) { showSnackbar("Aucune donnée"); return; }
-    var csv = "Agent;Chemise;Pantalon;Veste;Casquette;Ceinture;Chaussures;Date;ÉtatChemise;ÉtatPantalon;Commentaires\n";
-    for (var i = 0; i < uniforms.length; i++) {
-        var u = uniforms[i];
+    let csv = "Agent;Chemise;Pantalon;Veste;Casquette;Ceinture;Chaussures;Date;ÉtatChemise;ÉtatPantalon;Commentaires\n";
+    for (let i = 0; i < uniforms.length; i++) {
+        const u = uniforms[i];
         csv += u.agent_code + ";" + u.shirt + ";" + u.pants + ";" + (u.jacket || "") + ";" + (u.cap ? 'Oui' : 'Non') + ";" + (u.belt ? 'Oui' : 'Non') + ";" + (u.shoes || "") + ";" + u.date + ";" + (u.shirt_condition || "") + ";" + (u.pants_condition || "") + ";" + (u.comments || "") + "\n";
     }
     downloadCSV(csv, "rapport_habillement.csv");
@@ -2028,13 +2045,13 @@ function displayWarningsMenu() {
 }
 
 function showAddWarningForm() {
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    var agentOptions = '';
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    let agentOptions = '';
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
         agentOptions += '<option value="' + a.code + '">' + a.nom + ' ' + a.prenom + '</option>';
     }
-    var html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="warningAgent">' + agentOptions + '</select></div>' +
+    const html = '<div class="info-section"><div class="form-group"><label>Agent</label><select id="warningAgent">' + agentOptions + '</select></div>' +
         '<div class="form-group"><label>Type</label><select id="warningType"><option>ORAL</option><option>ECRIT</option><option>MISE_A_PIED</option></select></div>' +
         '<div class="form-group"><label>Date</label><input type="date" id="warningDate" value="' + new Date().toISOString().split('T')[0] + '"></div>' +
         '<div class="form-group"><label>Description</label><textarea id="warningDesc" rows="3"></textarea></div></div>';
@@ -2050,10 +2067,10 @@ function addWarning() {
 
 function showWarningsList() {
     if (!warnings.length) { showSnackbar("Aucun avertissement"); return; }
-    var html = '<div class="info-section"><table class="classement-table"><thead><th>Agent</th><th>Type</th><th>Date</th><th>Description</th><th>Actions</th></thead><tbody>';
-    for (var i = 0; i < warnings.length; i++) {
-        var w = warnings[i];
-        html += '汽笛<td><strong>' + w.agent_code + '</strong>汽笛>' + w.type + '汽笛>' + w.date + '汽笛>' + w.description.substring(0,40) + '...汽笛><button class="action-btn small red" onclick="deleteWarning(\'' + w.id + '\')">🗑️</button>汽笛';
+    let html = '<div class="info-section"><table class="classement-table"><thead><th>Agent</th><th>Type</th><th>Date</th><th>Description</th><th>Actions</th></thead><tbody>';
+    for (let i = 0; i < warnings.length; i++) {
+        const w = warnings[i];
+        html += '汽笛>' + w.agent_code + '汽笛>' + w.type + '汽笛>' + w.date + '汽笛>' + w.description.substring(0,40) + '...汽笛><button class="action-btn small red" onclick="deleteWarning(\'' + w.id + '\')">🗑️</button>汽笛';
     }
     html += '</tbody>赶趟</div>';
     openPopup("Avertissements", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
@@ -2061,7 +2078,7 @@ function showWarningsList() {
 
 function deleteWarning(id) {
     if (confirm("Supprimer cet avertissement ?")) {
-        var idx = warnings.findIndex(function(w) { return w.id == id; });
+        const idx = warnings.findIndex(function(w) { return w.id == id; });
         if (idx !== -1) warnings.splice(idx, 1);
         saveData();
         showSnackbar("Avertissement supprimé");
@@ -2080,7 +2097,7 @@ function displayHolidaysMenu() {
 }
 
 function showAddHolidayForm() {
-    var html = '<div class="info-section">' +
+    const html = '<div class="info-section">' +
         '<h3>➕ Ajouter un jour férié</h3>' +
         '<div class="form-group"><label>Date *</label><input type="date" id="newHolidayDate" class="form-input" required></div>' +
         '<div class="form-group"><label>Description *</label><input type="text" id="newHolidayDesc" class="form-input" required placeholder="Ex: Aïd al-Fitr"></div>' +
@@ -2092,11 +2109,11 @@ function showAddHolidayForm() {
 }
 
 function saveHoliday() {
-    var date = document.getElementById('newHolidayDate').value;
-    var description = document.getElementById('newHolidayDesc').value;
-    var type = document.getElementById('newHolidayType').value;
-    var recurring = document.getElementById('newHolidayRecurring').value === 'true';
-    var comment = document.getElementById('newHolidayComment').value;
+    const date = document.getElementById('newHolidayDate').value;
+    const description = document.getElementById('newHolidayDesc').value;
+    const type = document.getElementById('newHolidayType').value;
+    const recurring = document.getElementById('newHolidayRecurring').value === 'true';
+    const comment = document.getElementById('newHolidayComment').value;
 
     if (!date || !description) {
         showSnackbar("Veuillez remplir la date et la description");
@@ -2108,7 +2125,7 @@ function saveHoliday() {
         return;
     }
 
-    var newHoliday = {
+    const newHoliday = {
         date: date,
         description: description,
         type: type,
@@ -2125,12 +2142,12 @@ function saveHoliday() {
 
 function showHolidaysList() {
     if (holidays.length === 0) generateYearlyHolidays();
-    var sorted = holidays.slice().sort(function(a,b) { return new Date(a.date) - new Date(b.date); });
-    var html = '<div class="info-section"><table class="classement-table"><thead><th>Date</th><th>Jour</th><th>Description</th><th>Type</th><th>Récurrent</th><th>Actions</th></thead><tbody>';
-    for (var i = 0; i < sorted.length; i++) {
-        var h = sorted[i];
-        var dayNames = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
-        var day = dayNames[new Date(h.date).getDay()];
+    const sorted = holidays.slice().sort(function(a,b) { return new Date(a.date) - new Date(b.date); });
+    let html = '<div class="info-section"><table class="classement-table"><thead><th>Date</th><th>Jour</th><th>Description</th><th>Type</th><th>Récurrent</th><th>Actions</th></thead><tbody>';
+    for (let i = 0; i < sorted.length; i++) {
+        const h = sorted[i];
+        const dayNames = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+        const day = dayNames[new Date(h.date).getDay()];
         html += '汽笛>' + h.date + '汽笛>' + day + '汽笛>' + h.description + '汽笛>' + (h.type || 'fixe') + '汽笛>' + (h.recurring ? 'Oui' : 'Non') + '汽笛><button class="action-btn small red" onclick="deleteHoliday(\'' + h.date + '\')">🗑️</button>汽笛';
     }
     html += '</tbody>赶趟</div>';
@@ -2139,7 +2156,7 @@ function showHolidaysList() {
 
 function deleteHoliday(date) {
     if (confirm("Supprimer le jour férié du " + date + " ?")) {
-        var idx = holidays.findIndex(function(h) { return h.date === date; });
+        const idx = holidays.findIndex(function(h) { return h.date === date; });
         if (idx !== -1) holidays.splice(idx, 1);
         saveData();
         showSnackbar("Jour férié supprimé");
@@ -2148,7 +2165,7 @@ function deleteHoliday(date) {
 }
 
 function generateYearlyHolidays() {
-    var year = new Date().getFullYear();
+    const year = new Date().getFullYear();
     holidays = [
         { date: year + "-01-01", description: 'Nouvel An', type: 'fixe', recurring: true },
         { date: year + "-01-11", description: 'Manifeste Indépendance', type: 'fixe', recurring: true },
@@ -2177,9 +2194,9 @@ function displayExportMenu() {
 }
 
 function exportAgentsCSV() {
-    var csv = "Code;Nom;Prénom;Groupe;Téléphone;Poste;Statut\n";
-    for (var i = 0; i < agents.length; i++) {
-        var a = agents[i];
+    let csv = "Code;Nom;Prénom;Groupe;Téléphone;Poste;Statut\n";
+    for (let i = 0; i < agents.length; i++) {
+        const a = agents[i];
         csv += a.code + ";" + a.nom + ";" + a.prenom + ";" + a.groupe + ";" + (a.tel || "") + ";" + (a.poste || "") + ";" + a.statut + "\n";
     }
     downloadCSV(csv, "agents.csv");
@@ -2187,14 +2204,14 @@ function exportAgentsCSV() {
 }
 
 function exportStatsCSV() {
-    var today = new Date();
-    var month = today.getMonth()+1, year = today.getFullYear();
-    var csv = "Agent;Code;Groupe;Travaillés;Fériés;Total;Taux;Congés\n";
-    var activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
-    for (var i = 0; i < activeAgents.length; i++) {
-        var a = activeAgents[i];
-        var stats = calculateWorkedDays(a.code, month, year);
-        var taux = Math.round(stats.workedDays / stats.totalDays * 100);
+    const today = new Date();
+    const month = today.getMonth()+1, year = today.getFullYear();
+    let csv = "Agent;Code;Groupe;Travaillés;Fériés;Total;Taux;Congés\n";
+    const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
+    for (let i = 0; i < activeAgents.length; i++) {
+        const a = activeAgents[i];
+        const stats = calculateWorkedDays(a.code, month, year);
+        const taux = Math.round(stats.workedDays / stats.totalDays * 100);
         csv += a.nom + " " + a.prenom + ";" + a.code + ";" + a.groupe + ";" + stats.workedDays + ";" + stats.holidayWorkedDays + ";" + stats.totalDays + ";" + taux + "%;" + stats.leaveDays + "\n";
     }
     downloadCSV(csv, "statistiques_" + getMonthName(month) + "_" + year + ".csv");
@@ -2202,15 +2219,15 @@ function exportStatsCSV() {
 }
 
 function backupAllData() {
-    var backup = { agents: agents, planningData: planningData, holidays: holidays, panicCodes: panicCodes, radios: radios, uniforms: uniforms, warnings: warnings, leaves: leaves, date: new Date().toISOString() };
+    const backup = { agents: agents, planningData: planningData, holidays: holidays, panicCodes: panicCodes, radios: radios, uniforms: uniforms, warnings: warnings, leaves: leaves, date: new Date().toISOString() };
     downloadCSV(JSON.stringify(backup, null, 2), "sga_backup.json");
     showSnackbar("Sauvegarde effectuée");
 }
 
 function downloadCSV(content, filename) {
-    var blob = new Blob(["\uFEFF" + content], { type: 'text/csv;charset=utf-8;' });
-    var link = document.createElement('a');
-    var url = URL.createObjectURL(blob);
+    const blob = new Blob(["\uFEFF" + content], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
     link.setAttribute('download', filename);
     document.body.appendChild(link);
@@ -2232,7 +2249,7 @@ function displayConfigMenu() {
 
 function changePassword() {
     if (!checkPassword()) { showSnackbar("Mot de passe actuel incorrect"); return; }
-    var newPwd = prompt("Nouveau mot de passe :");
+    const newPwd = prompt("Nouveau mot de passe :");
     if (newPwd && newPwd.trim()) {
         ADMIN_PASSWORD = newPwd;
         localStorage.setItem('sga_password', newPwd);
@@ -2261,8 +2278,8 @@ function resetTestData() {
 }
 
 function showAbout() {
-    var html = '<div class="info-section" style="text-align:center"><h3>SGA - CleanCo</h3><p>Système de Gestion des Agents</p><p>Version 5.2</p><p>© 2025</p><hr><p>📊 Total jours = travaillés (shifts 1,2,3) + fériés chômés<br>🎉 Jours fériés récurrents annuellement<br>👔 Habillement complet<br>📅 Congés par période avec option dimanches<br>📈 Évolution mensuelle et classement par groupe<br>📁 Import depuis data.js (corrigé)<br>🔄 Logique Python des cycles de shift<br>📊 Export planning en Excel simple</p></div>';
+    const html = '<div class="info-section" style="text-align:center"><h3>SGA - CleanCo</h3><p>Système de Gestion des Agents</p><p>Version 5.2</p><p>© 2025</p><hr><p>📊 Total jours = travaillés (shifts 1,2,3) + fériés chômés<br>🎉 Jours fériés récurrents annuellement<br>👔 Habillement complet<br>📅 Congés par période avec option dimanches<br>📈 Évolution mensuelle et classement par groupe<br>📁 Import depuis data.js (corrigé)<br>🔄 Logique Python des cycles de shift<br>📊 Export planning en Excel simple</p></div>';
     openPopup("À propos", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
-console.log("✅ SGA chargé - Version 5.2 avec données CleanCo, fériés récurrents, comptage fériés chômés, export Excel simple");
+console.log("✅ SGA chargé - Version 5.2 avec données CleanCo, fériés récurrents, comptage fériés chômés, export Excel simple, recherche d'agent");
