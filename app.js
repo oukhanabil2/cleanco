@@ -165,7 +165,7 @@ function initializeTestData() {
         { code: 'L15C', nom: 'TOUFIK', prenom: 'ALHAFID', groupe: 'C', tel: '0662888444', adresse: '', code_panique: '999', poste: 'L15A', cin: 'B197016', date_naissance: '1975-02-04', matricule: 'S09260C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'L16C', nom: 'AZIZ', prenom: 'ELALOUSSI', groupe: 'C', tel: '0661098728', adresse: '', code_panique: '328', poste: 'L16', cin: 'Z428454', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'L20C', nom: 'FARASSI', prenom: 'KARIM', groupe: 'C', tel: '0635419761', adresse: '', code_panique: '922', poste: 'L 20', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
-        { code: 'L18C', nom: 'ABDELAZIZ', prenom: 'SAKANI', groupe: 'C', tel: '0662509676', adresse: '', code_panique: '826', poste: 'L18', cin: 'A203082', date_naissance: '1961-03-10', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
+        { code: 'L18C', nom: 'ABDELAZIZ', prenom: 'SAKANI', groupe: 'C', tel: '0662509676', adresse: '', code_panique: '826', poste: 'L18', cin: 'A203082', date_naissance: '1961-03-10', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
 
         // Groupe D
         { code: 'CPD', nom: 'mouhcine', prenom: 'YAGOUB', groupe: 'D', tel: '0660336995', adresse: '', code_panique: '854', poste: 'CPA', cin: '0408930', date_naissance: '1966-05-17', matricule: 'S09272C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
