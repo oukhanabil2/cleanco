@@ -1,5 +1,5 @@
 // app.js - VERSION CORRIGÉE
-// Tous les agents actifs, recherche d'agent pour planning, export Excel simple
+// Planning vertical, tous les agents actifs, export Excel simple
 
 // --- CONSTANTES ---
 const JOURS_FRANCAIS = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
@@ -60,7 +60,7 @@ function saveData() {
 
 function initializeTestData() {
     agents = [
-        // Groupe A
+        // Groupe A - TOUS ACTIFS
         { code: 'CPA', nom: 'OUKHA', prenom: 'NABIL', groupe: 'A', tel: '0681564713', adresse: 'sala Al jadida', code_panique: '', poste: 'CP', cin: 'A758609', date_naissance: '1974-11-05', matricule: 'S09278C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'CONA', nom: 'EL JAMALI', prenom: 'Younes', groupe: 'A', tel: '0663290648', adresse: 'cym', code_panique: '', poste: 'CON', cin: 'A370180', date_naissance: '1992-09-04', matricule: 'S09425C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'MOTA', nom: 'TISSIRT', prenom: 'hakim', groupe: 'A', tel: '0611160166', adresse: 'sale', code_panique: '', poste: 'MOT', cin: 'CB230482', date_naissance: '1968-10-20', matricule: 'S09279C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
@@ -95,7 +95,7 @@ function initializeTestData() {
         { code: 'L4B', nom: 'YOUNES', prenom: 'KHODAYRA', groupe: 'A', tel: '0696893480', adresse: '', code_panique: '842', poste: 'L4A', cin: '660675', date_naissance: '1983-02-10', matricule: 'S09162C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'Z6A', nom: 'MOHAMED', prenom: 'MOUSTAKIM', groupe: 'A', tel: '0654718291', adresse: '', code_panique: 'DP1400', poste: 'z6A', cin: '764411', date_naissance: '1975-07-15', matricule: 'S09246C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
 
-        // Groupe B
+        // Groupe B - TOUS ACTIFS
         { code: 'CPB', nom: 'CHMAREKH', prenom: 'Noureddine', groupe: 'B', tel: '0660337343', adresse: '', code_panique: '854', poste: 'CPA', cin: '604196', date_naissance: '1971-11-24', matricule: 'S09274C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'CONB', nom: 'IBRAHIMY', prenom: 'ABDELLAHADIB', groupe: 'B', tel: '0662815350', adresse: '', code_panique: 'DP1400', poste: 'CON', cin: 'C475743', date_naissance: '1976-03-15', matricule: 'S09275C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'MOTB', nom: 'KAALI', prenom: 'MAJID', groupe: 'B', tel: '0777934644', adresse: '', code_panique: 'DP1400', poste: 'MOT', cin: 'Q210329', date_naissance: '1978-11-25', matricule: 'S12666C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
@@ -131,7 +131,7 @@ function initializeTestData() {
         { code: 'L20B', nom: 'RACHAKHA', prenom: 'SAID', groupe: 'B', tel: '0648758364', adresse: '', code_panique: '922', poste: 'L 20', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'ZB', nom: 'SNAIDA', prenom: 'AHMED', groupe: 'B', tel: '0666362689', adresse: '', code_panique: '815', poste: 'ZX', cin: 'A24831', date_naissance: '1974-05-25', matricule: 'S09195C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
 
-        // Groupe C
+        // Groupe C - TOUS ACTIFS
         { code: 'CPC', nom: 'ABDELHAK', prenom: 'BERRIMA', groupe: 'C', tel: '0660337343', adresse: '', code_panique: '854', poste: 'CPA', cin: '403963', date_naissance: '1967-02-24', matricule: 'S09271C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'CONC', nom: 'NOUR', prenom: 'HICHAM', groupe: 'C', tel: '0665484503', adresse: '', code_panique: 'DP1400', poste: 'CON', cin: 'A714632', date_naissance: '1982-02-03', matricule: 'S09174C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'MOTC', nom: 'IDRISS', prenom: 'IDRISSI', groupe: 'C', tel: '0667999548', adresse: '', code_panique: 'DP1400', poste: 'MOT', cin: 'AB171068', date_naissance: '1972-12-24', matricule: 'S09276C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
@@ -167,7 +167,7 @@ function initializeTestData() {
         { code: 'L20C', nom: 'FARASSI', prenom: 'KARIM', groupe: 'C', tel: '0635419761', adresse: '', code_panique: '922', poste: 'L 20', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'L18C', nom: 'ABDELAZIZ', prenom: 'SAKANI', groupe: 'C', tel: '0662509676', adresse: '', code_panique: '826', poste: 'L18', cin: 'A203082', date_naissance: '1961-03-10', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
 
-        // Groupe D
+        // Groupe D - TOUS ACTIFS
         { code: 'CPD', nom: 'mouhcine', prenom: 'YAGOUB', groupe: 'D', tel: '0660336995', adresse: '', code_panique: '854', poste: 'CPA', cin: '0408930', date_naissance: '1966-05-17', matricule: 'S09272C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'COND', nom: 'HOUSSAIN', prenom: 'ALAHYANE', groupe: 'D', tel: '0668191854', adresse: '', code_panique: 'DP1400', poste: 'CON', cin: 'JB49050', date_naissance: '1966-01-01', matricule: 'S09280C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'MOTD', nom: 'LAHCEN', prenom: 'ALAMI', groupe: 'D', tel: '0666195501', adresse: '', code_panique: 'DP1400', poste: 'MOT', cin: 'UA97962', date_naissance: '1967-06-24', matricule: 'S09277C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
@@ -203,7 +203,7 @@ function initializeTestData() {
         { code: 'L18D', nom: 'MOHAMED', prenom: 'GUARMA', groupe: 'D', tel: '0699082100', adresse: '', code_panique: '826', poste: 'L18', cin: 'AD200164', date_naissance: '1987-02-20', matricule: 'S12074C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'L20D', nom: 'BRAHIM', prenom: 'SATANI', groupe: 'D', tel: '0660082965', adresse: '', code_panique: '922', poste: 'L 20', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
 
-        // Groupe E
+        // Groupe E - TOUS ACTIFS
         { code: 'ACCA', nom: 'CHAJAI', prenom: 'SOUKAINA', groupe: 'E', tel: '', adresse: '', code_panique: 'non', poste: 'D.U.E', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'ACCB', nom: 'MAAROUF', prenom: 'NAJAT', groupe: 'E', tel: '', adresse: '', code_panique: 'non', poste: 'D.U.E', cin: 'AD223954', date_naissance: '1991-12-06', matricule: 'S10100C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
         { code: 'Z1A', nom: 'FARROUCHE', prenom: 'MILOUD', groupe: 'E', tel: '', adresse: '', code_panique: 'dp1400', poste: 'D.U.E', cin: 'AA31133', date_naissance: '1987-11-05', matricule: 'S09286C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
@@ -232,11 +232,7 @@ function openPopup(title, body, footer) {
     const overlay = document.getElementById('overlay');
     const content = document.getElementById('popup-content');
     if (!overlay || !content) return;
-    content.innerHTML = `
-        <div class="popup-header"><h2>${title}</h2><button class="popup-close-btn" onclick="closePopup()">&times;</button></div>
-        <div class="popup-body">${body}</div>
-        <div class="popup-footer">${footer}</div>
-    `;
+    content.innerHTML = '<div class="popup-header"><h2>' + title + '</h2><button class="popup-close-btn" onclick="closePopup()">&times;</button></div><div class="popup-body">' + body + '</div><div class="popup-footer">' + footer + '</div>';
     overlay.classList.add('visible');
 }
 
@@ -370,87 +366,6 @@ function calculateWorkedDays(agentCode, month, year) {
     }
     const totalDays = workedDays + holidayWorkedDays;
     return { workedDays: workedDays, totalDays: totalDays, leaveDays: leaveDays, holidayWorkedDays: holidayWorkedDays, sundayLeaves: sundayLeaves };
-}
-
-// --- STATISTIQUES AVANCÉES ---
-function obtenirStatsDetailleesAgent(agentCode, mois, annee) {
-    const agent = agents.find(function(a) { return a.code === agentCode; });
-    if (!agent) return { erreur: "Agent non trouvé" };
-    const daysInMonth = new Date(annee, mois, 0).getDate();
-    let joursTravailles = 0, joursRepos = 0, joursConges = 0, joursMaladie = 0, joursAutres = 0, joursFeriesTravailles = 0;
-    const joursSemaine = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-    const shiftsParJour = {};
-    for (let i = 0; i < joursSemaine.length; i++) {
-        shiftsParJour[joursSemaine[i]] = { '1':0, '2':0, '3':0, 'R':0, 'C':0, 'M':0, 'A':0 };
-    }
-    for (let d = 1; d <= daysInMonth; d++) {
-        const date = new Date(annee, mois - 1, d);
-        const dateStr = annee + '-' + String(mois).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-        const shift = getShiftForAgent(agentCode, dateStr);
-        const estFerie = isHolidayDate(date);
-        if (shift === '1' || shift === '2' || shift === '3') {
-            joursTravailles++;
-            if (estFerie) joursFeriesTravailles++;
-        } else if (shift === 'R') {
-            joursRepos++;
-        } else if (shift === 'C') {
-            joursConges++;
-        } else if (shift === 'M') {
-            joursMaladie++;
-        } else if (shift === 'A') {
-            joursAutres++;
-        }
-        const jourIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
-        const jourSemaine = joursSemaine[jourIndex];
-        if (shiftsParJour[jourSemaine] && shiftsParJour[jourSemaine][shift] !== undefined)
-            shiftsParJour[jourSemaine][shift]++;
-    }
-    const totalJours = joursTravailles + joursFeriesTravailles;
-    const tauxPresence = totalJours > 0 ? (joursTravailles / totalJours) * 100 : 0;
-    const statsBase = calculateWorkedDays(agentCode, mois, annee);
-    return {
-        agent: agentCode, nom_complet: agent.nom + ' ' + agent.prenom, groupe: agent.groupe,
-        indicateurs_avances: {
-            jours_travailles: joursTravailles, jours_repos: joursRepos, jours_conges: joursConges,
-            jours_maladie: joursMaladie, jours_autres: joursAutres, jours_feries_travailles: joursFeriesTravailles,
-            total_jours: totalJours, taux_presence: parseFloat(tauxPresence.toFixed(1)), shifts_par_jour: shiftsParJour
-        },
-        jours_travailles_base: statsBase.workedDays, jours_conges_base: statsBase.leaveDays, total_jours_base: statsBase.totalDays
-    };
-}
-
-function obtenirClassementGroupe(groupe, mois, annee) {
-    const agentsGroupe = agents.filter(function(a) { return a.groupe === groupe && a.statut === 'actif'; });
-    if (agentsGroupe.length === 0) return { erreur: "Aucun agent dans le groupe " + groupe };
-    const classement = agentsGroupe.map(function(agent) {
-        const stats = calculateWorkedDays(agent.code, mois, annee);
-        return { code: agent.code, nom: agent.nom, prenom: agent.prenom, nom_complet: agent.nom + ' ' + agent.prenom, cpa: stats.workedDays };
-    });
-    classement.sort(function(a,b) { return b.cpa - a.cpa; });
-    for (let i = 0; i < classement.length; i++) {
-        classement[i].rang = i + 1;
-    }
-    return { groupe: groupe, mois: mois, annee: annee, classement: classement, total_agents: classement.length };
-}
-
-function obtenirEvolutionMensuelle(agentCode, nbMois) {
-    if (nbMois === undefined) nbMois = 6;
-    const today = new Date();
-    let moisActuel = today.getMonth() + 1, anneeActuelle = today.getFullYear();
-    const evolution = [];
-    for (let i = 0; i < nbMois; i++) {
-        let moisCalc = moisActuel - i, anneeCalc = anneeActuelle;
-        if (moisCalc <= 0) { moisCalc += 12; anneeCalc--; }
-        const stats = calculateWorkedDays(agentCode, moisCalc, anneeCalc);
-        const periode = String(moisCalc).padStart(2,'0') + '/' + anneeCalc;
-        evolution.unshift({ mois: moisCalc, annee: anneeCalc, cpa: stats.workedDays, periode: periode });
-    }
-    let tendance = 0;
-    if (evolution.length >= 2) {
-        const premier = evolution[0].cpa, dernier = evolution[evolution.length-1].cpa;
-        if (premier > 0) tendance = ((dernier - premier) / premier) * 100;
-    }
-    return { agent: agentCode, evolution: evolution, tendance: parseFloat(tendance.toFixed(1)), nb_mois: nbMois };
 }
 
 // ==================== MENU PRINCIPAL ====================
@@ -723,7 +638,7 @@ function processDataJsImport() {
     reader.readAsText(file, 'UTF-8');
 }
 
-// ==================== GESTION DU PLANNING AVEC RECHERCHE ====================
+// ==================== GESTION DU PLANNING VERTICAL ====================
 function displayPlanningMenu() {
     displaySubMenu("GESTION DU PLANNING", [
         { text: "📅 Planning Mensuel", handler: function() { showMonthlyPlanning(); } },
@@ -752,49 +667,35 @@ function generatePlanningView() {
     const year = parseInt(document.getElementById('planYear').value, 10);
     const activeAgents = agents.filter(function(a) { return a.statut === 'actif'; });
     const daysInMonth = new Date(year, month, 0).getDate();
-    let html = '<div class="info-section"><h3>Planning ' + getMonthName(month) + ' ' + year + '</h3><div style="overflow-x:auto"><table class="planning-table"><thead><th>Agent</th>';
+    
+    // Construction du tableau VERTICAL (chaque agent sur une ligne)
+    let html = '<div class="info-section"><h3>Planning ' + getMonthName(month) + ' ' + year + '</h3><div style="overflow-x:auto"><table class="planning-table"><thead><tr><th>Agent</th>';
     for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, month-1, d);
         const isHoliday = isHolidayDate(date);
         html += '<th class="' + (isHoliday ? 'holiday' : '') + '">' + d + '<br>' + JOURS_FRANCAIS[date.getDay()].substring(0,2) + '</th>';
     }
-    html += '<th>Total</th></thead><tbody>';
+    html += '<th>Total</th></tr></thead><tbody>';
+    
     for (let i = 0; i < activeAgents.length; i++) {
         const agent = activeAgents[i];
         const stats = calculateWorkedDays(agent.code, month, year);
-        html += '汽笛<td><strong>' + agent.code + '</strong><br><small>' + agent.nom + '</small>汽笛';
+        html += '<tr><td><strong>' + agent.code + '</strong><br><small>' + agent.nom + '</small></td>';
         for (let d = 1; d <= daysInMonth; d++) {
             const dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
             const shift = getShiftForAgent(agent.code, dateStr);
             const date = new Date(year, month-1, d);
             const isHoliday = isHolidayDate(date);
-            html += '<td class="shift-cell" style="background:' + SHIFT_COLORS[shift] + ';color:white" title="' + SHIFT_LABELS[shift] + (isHoliday ? ' - Férié' : '') + '" onclick="showShiftModification(\'' + agent.code + '\',\'' + dateStr + '\')">' + shift + '汽笛';
+            html += '<td class="shift-cell" style="background:' + SHIFT_COLORS[shift] + ';color:white" title="' + SHIFT_LABELS[shift] + (isHoliday ? ' - Férié' : '') + '" onclick="showShiftModification(\'' + agent.code + '\',\'' + dateStr + '\')">' + shift + '</td>';
         }
-        html += '<td style="background:#34495e"><strong>' + stats.totalDays + ' j</strong><br><small>' + stats.workedDays + ' travaillés<br>+' + stats.holidayWorkedDays + ' fériés</small>汽笛';
+        html += '<td style="background:#34495e"><strong>' + stats.totalDays + ' j</strong><br><small>' + stats.workedDays + ' travaillés<br>+' + stats.holidayWorkedDays + ' fériés</small></td></tr>';
     }
-    html += '</tbody>赶趟</div><div class="info-section"><h4>Légende:</h4>';
+    html += '</tbody></table></div><div class="info-section"><h4>Légende:</h4>';
     for (const k in SHIFT_LABELS) {
         html += '<span style="display:inline-block;margin:5px;padding:2px 8px;background:' + SHIFT_COLORS[k] + ';border-radius:12px">' + k + '=' + SHIFT_LABELS[k] + '</span>';
     }
     html += '<br><span style="background:#e74c3c">📅 Jours fériés</span><br><span style="background:#2ecc71">📊 Total = travaillés + fériés chômés</span></div></div>';
     openPopup("Planning " + getMonthName(month) + " " + year, html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
-}
-
-// Fonction de recherche d'agent pour le planning
-function filterAgentForPlanning() {
-    const searchTerm = document.getElementById('agentSearchInput').value.toLowerCase();
-    const agentSelect = document.getElementById('apAgent');
-    if (!agentSelect) return;
-    
-    for (let i = 0; i < agentSelect.options.length; i++) {
-        const option = agentSelect.options[i];
-        const text = option.text.toLowerCase();
-        if (searchTerm === '' || text.includes(searchTerm)) {
-            option.style.display = '';
-        } else {
-            option.style.display = 'none';
-        }
-    }
 }
 
 function showAgentPlanningSelector() {
@@ -817,6 +718,22 @@ function showAgentPlanningSelector() {
     openPopup("Planning par Agent", html, '<button class="popup-button green" onclick="showAgentPlanningView()">Voir</button><button class="popup-button gray" onclick="closePopup()">Annuler</button>');
 }
 
+function filterAgentForPlanning() {
+    const searchTerm = document.getElementById('agentSearchInput').value.toLowerCase();
+    const agentSelect = document.getElementById('apAgent');
+    if (!agentSelect) return;
+    
+    for (let i = 0; i < agentSelect.options.length; i++) {
+        const option = agentSelect.options[i];
+        const text = option.text.toLowerCase();
+        if (searchTerm === '' || text.includes(searchTerm)) {
+            option.style.display = '';
+        } else {
+            option.style.display = 'none';
+        }
+    }
+}
+
 function showAgentPlanningView() {
     const agentSelect = document.getElementById('apAgent');
     const agentCode = agentSelect ? agentSelect.value : null;
@@ -830,9 +747,11 @@ function showAgentPlanningView() {
     if (!agent) return;
     const daysInMonth = new Date(year, month, 0).getDate();
     const stats = calculateWorkedDays(agentCode, month, year);
+    
     let html = '<div class="info-section"><h3>Planning de ' + agent.nom + ' ' + agent.prenom + ' (' + agent.code + ')</h3><p><strong>Groupe:</strong> ' + agent.groupe + ' | <strong>Poste:</strong> ' + (agent.poste || 'Non spécifié') + '</p>';
     html += '<div style="background:#34495e;padding:10px;border-radius:8px;margin-bottom:15px"><strong>Statistiques du mois:</strong><br>📊 Total jours = ' + stats.totalDays + ' (' + stats.workedDays + ' travaillés + ' + stats.holidayWorkedDays + ' fériés)<br>📅 Jours fériés chômés: ' + stats.holidayWorkedDays + '<br>⚠️ Congés dimanches (non comptés): ' + stats.sundayLeaves + '<br>🚫 Congés (non comptabilisés): ' + stats.leaveDays + '</div>';
     html += '<table class="planning-table"><thead><th>Date</th><th>Jour</th><th>Shift</th><th>Description</th><th>Actions</th></thead><tbody>';
+    
     for (let d = 1; d <= daysInMonth; d++) {
         const date = new Date(year, month-1, d);
         const dateStr = year + '-' + String(month).padStart(2,'0') + '-' + String(d).padStart(2,'0');
@@ -842,7 +761,7 @@ function showAgentPlanningView() {
         let extraInfo = '';
         if (isHoliday && (shift === '1' || shift === '2' || shift === '3')) extraInfo = ' 🎉 Férié travaillé';
         if ((shift === 'C' || shift === 'M' || shift === 'A') && isSunday) extraInfo = ' ⚠️ Congé dimanche (non compté)';
-        html += '汽笛<td>' + dateStr + '汽笛<td class="' + (isSunday ? 'sunday' : '') + '">' + JOURS_FRANCAIS[date.getDay()] + (isHoliday ? ' 🎉' : '') + '汽笛<td style="background:' + SHIFT_COLORS[shift] + ';color:white;text-align:center">' + shift + '汽笛>' + SHIFT_LABELS[shift] + extraInfo + '汽笛><button class="action-btn small blue" onclick="showShiftModification(\'' + agentCode + '\',\'' + dateStr + '\')">✏️</button><button class="action-btn small red" onclick="showAddLeaveForDate(\'' + agentCode + '\',\'' + dateStr + '\')">🚫</button>汽笛';
+        html += '汽笛>' + dateStr + '汽笛<td class="' + (isSunday ? 'sunday' : '') + '">' + JOURS_FRANCAIS[date.getDay()] + (isHoliday ? ' 🎉' : '') + '汽笛<td style="background:' + SHIFT_COLORS[shift] + ';color:white;text-align:center">' + shift + '汽笛>' + SHIFT_LABELS[shift] + extraInfo + '汽笛><button class="action-btn small blue" onclick="showShiftModification(\'' + agentCode + '\',\'' + dateStr + '\')">✏️</button><button class="action-btn small red" onclick="showAddLeaveForDate(\'' + agentCode + '\',\'' + dateStr + '\')">🚫</button>汽笛';
     }
     html += '</tbody>赶趟</div>';
     openPopup("Planning " + agent.code, html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
@@ -993,7 +912,7 @@ function exportPlanningToExcel() {
         const date = new Date(year, month-1, d);
         html += '<th>' + d + '<br>' + JOURS_FRANCAIS[date.getDay()].substring(0,2) + '</th>';
     }
-    html += '<th>Total</th></tr></thead><tbody>';
+    html += '<th>Total</th> </tr></thead><tbody>';
 
     for (let i = 0; i < agentsToExport.length; i++) {
         const agent = agentsToExport[i];
@@ -1006,7 +925,7 @@ function exportPlanningToExcel() {
         }
         html += '<td><strong>' + stats.totalDays + '</strong></td></tr>';
     }
-    html += '</tbody> </table><p><small>Total = travaillés (1,2,3) + fériés chômés</small></p></body></html>';
+    html += '</tbody></table><p><small>Total = travaillés (1,2,3) + fériés chômés</small></p></body></html>';
 
     const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
     const link = document.createElement('a');
@@ -1184,9 +1103,9 @@ function afficherClassementGroupe() {
     let table = '<h3>Classement Groupe ' + groupe + ' - ' + getMonthName(mois) + ' ' + annee + '</h3><table class="classement-table"><thead><th>Rang</th><th>Agent</th><th>CPA</th></thead><tbody>';
     for (let i = 0; i < classement.classement.length; i++) {
         const a = classement.classement[i];
-        table += '汽笛<td class="rank-' + a.rang + '">' + a.rang + '汽笛>' + a.nom_complet + '汽笛>' + a.cpa + '汽笛';
+        table += '<tr><td class="rank-' + a.rang + '">' + a.rang + '</td><td>' + a.nom_complet + '</td><td>' + a.cpa + '</td></tr>';
     }
-    table += '</tbody>赶趟';
+    table += '</tbody></table>';
     document.getElementById('rankResult').innerHTML = table;
 }
 
@@ -1210,9 +1129,9 @@ function afficherEvolution() {
     let table = '<h3>Évolution mensuelle de ' + agentCode + '</h3><table class="classement-table"><thead><th>Période</th><th>CPA</th></thead><tbody>';
     for (let i = 0; i < evol.evolution.length; i++) {
         const e = evol.evolution[i];
-        table += '汽笛<td class="periode">' + e.periode + '汽笛<td class="valeur">' + e.cpa + '汽笛';
+        table += '<tr><td class="periode">' + e.periode + '</td><td class="valeur">' + e.cpa + '</td></tr>';
     }
-    table += '</tbody>赶趟';
+    table += '</tbody></table>';
     const tendanceColor = evol.tendance >= 0 ? '#27ae60' : '#e74c3c';
     table += '<p><strong>Tendance :</strong> <span style="color:' + tendanceColor + '">' + evol.tendance + '%</span> sur ' + nbMois + ' mois</p>';
     document.getElementById('evolResult').innerHTML = table;
@@ -2282,4 +2201,4 @@ function showAbout() {
     openPopup("À propos", html, '<button class="popup-button gray" onclick="closePopup()">Fermer</button>');
 }
 
-console.log("✅ SGA chargé - Version 5.2 avec données CleanCo, fériés récurrents, comptage fériés chômés, export Excel simple, recherche d'agent");
+console.log("✅ SGA chargé - Version 5.2 avec données CleanCo, fériés récurrents, comptage fériés chômés, export Excel simple, recherche d'agent, planning vertical");
