@@ -105,7 +105,7 @@ const agents = [
     { code: 'L15C', nom: 'TOUFIK', prenom: 'ALHAFID', groupe: 'C', tel: '0662888444', adresse: '', code_panique: '999', poste: 'L15A', cin: 'B197016', date_naissance: '1975-02-04', matricule: 'S09260C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
     { code: 'L16C', nom: 'AZIZ', prenom: 'ELALOUSSI', groupe: 'C', tel: '0661098728', adresse: '', code_panique: '328', poste: 'L16', cin: 'Z428454', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
     { code: 'L20C', nom: 'FARASSI', prenom: 'KARIM', groupe: 'C', tel: '0635419761', adresse: '', code_panique: '922', poste: 'L 20', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
-    { code: 'L18C', nom: 'ABDELAZIZ', prenom: 'SAKANI', groupe: 'C', tel: '0662509676', adresse: '', code_panique: '826', poste: 'L18', cin: 'A203082', date_naissance: '1961-03-10', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
+    { code: 'L18C', nom: 'ABDELAZIZ', prenom: 'SAKANI', groupe: 'C', tel: '0662509676', adresse: '', code_panique: '826', poste: 'L18', cin: 'A203082', date_naissance: '1961-03-10', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
 
     // Groupe D
     { code: 'CPD', nom: 'mouhcine', prenom: 'YAGOUB', groupe: 'D', tel: '0660336995', adresse: '', code_panique: '854', poste: 'CPA', cin: '0408930', date_naissance: '1966-05-17', matricule: 'S09272C', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
@@ -155,13 +155,13 @@ const agents = [
     { code: 'PR', nom: 'OUNASSE', prenom: 'NAWFAL', groupe: 'E', tel: '', adresse: 'C.T.R', code_panique: '', poste: '', cin: '', date_naissance: '', matricule: '', date_entree: '2025-11-01', date_sortie: null, statut: 'actif' },
 
     // Agents retraités (statut inactif)
-    { code: 'O4B', nom: 'ANQACH HASSAN', prenom: 'HASSAN', groupe: 'B', tel: '', adresse: '313', code_panique: '', poste: 'O4', cin: 'non', date_naissance: '1962-04-09', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
-    { code: 'O5A', nom: 'LEKHEL', prenom: 'RACHID', groupe: 'A', tel: '0644734747', adresse: '', code_panique: '848', poste: 'O5', cin: 'non', date_naissance: '1962-12-04', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
-    { code: 'O14A', nom: 'EL KHAOUI', prenom: 'ABDELTIF', groupe: 'A', tel: '0670768055', adresse: '', code_panique: '838', poste: 'O14', cin: 'non', date_naissance: '1961-04-25', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
-    { code: 'L10A', nom: 'AMHZOUL', prenom: 'MUSTAPHA', groupe: 'A', tel: '0707331929', adresse: '', code_panique: '926', poste: 'L10', cin: '', date_naissance: '1961-09-28', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
-    { code: 'O12C', nom: 'AZERFI', prenom: 'SAID', groupe: 'C', tel: '0672499982', adresse: '', code_panique: '855', poste: 'O12', cin: '', date_naissance: '1961-06-30', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
-    { code: 'O5D', nom: 'FERZOUI', prenom: 'KHALED', groupe: 'D', tel: '0676745704', adresse: '', code_panique: '848', poste: 'O5', cin: '', date_naissance: '1962-01-01', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' },
-    { code: 'L8D', nom: 'BOUTOU', prenom: 'MOHAMED', groupe: 'D', tel: '0670181844', adresse: '', code_panique: '815', poste: 'L8', cin: '', date_naissance: '1961-06-30', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'inactif' }
+    { code: 'O4B', nom: 'ANQACH HASSAN', prenom: 'HASSAN', groupe: 'B', tel: '', adresse: '313', code_panique: '', poste: 'O4', cin: 'non', date_naissance: '1962-04-09', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
+    { code: 'O5A', nom: 'LEKHEL', prenom: 'RACHID', groupe: 'A', tel: '0644734747', adresse: '', code_panique: '848', poste: 'O5', cin: 'non', date_naissance: '1962-12-04', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
+    { code: 'O14A', nom: 'EL KHAOUI', prenom: 'ABDELTIF', groupe: 'A', tel: '0670768055', adresse: '', code_panique: '838', poste: 'O14', cin: 'non', date_naissance: '1961-04-25', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
+    { code: 'L10A', nom: 'AMHZOUL', prenom: 'MUSTAPHA', groupe: 'A', tel: '0707331929', adresse: '', code_panique: '926', poste: 'L10', cin: '', date_naissance: '1961-09-28', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
+    { code: 'O12C', nom: 'AZERFI', prenom: 'SAID', groupe: 'C', tel: '0672499982', adresse: '', code_panique: '855', poste: 'O12', cin: '', date_naissance: '1961-06-30', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
+    { code: 'O5D', nom: 'FERZOUI', prenom: 'KHALED', groupe: 'D', tel: '0676745704', adresse: '', code_panique: '848', poste: 'O5', cin: '', date_naissance: '1962-01-01', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' },
+    { code: 'L8D', nom: 'BOUTOU', prenom: 'MOHAMED', groupe: 'D', tel: '0670181844', adresse: '', code_panique: '815', poste: 'L8', cin: '', date_naissance: '1961-06-30', matricule: 'RETRAITE', date_entree: '2025-11-01', date_sortie: '2025-01-01', statut: 'actif' }
 ];
 
 console.log(`✅ Base de données chargée avec ${agents.length} agents (actifs + inactifs)`);
